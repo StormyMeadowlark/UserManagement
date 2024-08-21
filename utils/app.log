@@ -1,0 +1,241 @@
+2024-08-17T14:54:46.478Z - Error Registering User: Message failed: 550 The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements
+2024-08-17T14:56:07.822Z - Error Registering User: Message failed: 550 The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements
+2024-08-17T14:59:49.827Z - Error Registering User: Invalid login: 535 Authentication failed: The provided authorization grant is invalid, expired, or revoked
+2024-08-17T15:03:09.953Z - Error Registering User: Invalid login: 535 Authentication failed: The provided authorization grant is invalid, expired, or revoked
+2024-08-17T15:05:08.357Z - Error Registering User: Invalid login: 535 Authentication failed: The provided authorization grant is invalid, expired, or revoked
+2024-08-17T15:06:31.553Z - User Registered: User johndoe registered.
+2024-08-17T15:18:49.479Z - User Registered: User johndoe registered.
+2024-08-17T15:20:59.776Z - User Registered: User johndoe registered.
+2024-08-17T15:22:25.413Z - Error Logging In: secretOrPrivateKey must have a value
+2024-08-17T15:25:21.250Z - Error Logging In: secretOrPrivateKey must have a value
+2024-08-17T15:25:36.387Z - Error Logging In: secretOrPrivateKey must have a value
+2024-08-17T15:28:24.515Z - Error Logging In: secretOrPrivateKey must have a value
+2024-08-17T15:28:40.606Z - User Login: User johndoe logged in.
+2024-08-17T15:45:34.990Z - User Registered: User mine1236 registered.
+2024-08-17T15:46:12.182Z - User Login: User mine1236 logged in.
+2024-08-17T15:59:00.680Z - Password Reset Requested: User mine1236 requested a password reset.
+2024-08-17T16:00:16.974Z - Password Reset Requested: User mine1236 requested a password reset.
+2024-08-17T16:01:12.150Z - Password Reset Requested: User mine1236 requested a password reset.
+2024-08-17T16:01:37.608Z - Password Reset Requested: User mine1236 requested a password reset.
+2024-08-17T16:04:00.825Z - Password Reset Requested: User mine1236 requested a password reset.
+2024-08-17T16:57:38.403Z - Password Reset Requested: User mine1236 requested a password reset.
+2024-08-17T16:59:27.975Z - Password Reset: User mine1236 reset their password.
+2024-08-17T18:25:32.083Z - Error Registering User: User validation failed: role: `Super Admin` is not a valid enum value for path `role`.
+2024-08-17T18:25:55.690Z - User Registered: User herken.ashlee registered.
+2024-08-17T18:26:44.007Z - User Login: User herken.ashlee logged in.
+2024-08-17T18:31:01.937Z - User Login: User herken.ashlee logged in.
+2024-08-17T18:34:19.022Z - User Login: User herken.ashlee logged in.
+2024-08-17T18:46:11.465Z - User Login: User herken.ashlee logged in.
+2024-08-17T18:49:52.168Z - User Login: User herken.ashlee logged in.
+2024-08-17T18:50:12.724Z - User Login: User herken.ashlee logged in.
+2024-08-17T18:50:39.479Z - User Login: User herken.ashlee logged in.
+2024-08-17T19:50:37.251Z - User Login: User herken.ashlee logged in.
+2024-08-17T20:02:11.664Z - User Login: User herken.ashlee logged in.
+2024-08-17T22:19:34.030Z - User Not Found: User ID: undefined
+2024-08-17T22:19:39.037Z - User Login: User herken.ashlee logged in.
+2024-08-18T13:59:20.828Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:00:34.649Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:01:04.482Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:01:53.794Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:17:01.970Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:17:32.016Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-18T14:18:21.556Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:19:26.449Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:19:37.451Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:19:55.263Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:28:08.798Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:29:11.374Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:29:24.240Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:29:30.765Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:30:54.636Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-18T14:31:47.685Z - Error Registering User: User validation failed: username: Path `username` is required., email: Path `email` is required., password: Path `password` is required., role: `` is not a valid enum value for path `role`.
+2024-08-18T14:43:10.062Z - Error Registering User: tenant is not defined
+2024-08-18T14:45:02.705Z - Error Registering User: tenant is not defined
+2024-08-18T15:59:27.979Z - Error Registering User: tenant is not defined
+2024-08-18T16:00:10.497Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-18T16:02:37.890Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-18T16:03:28.659Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-18T16:13:16.575Z - Decoded Token: User ID: 66c21d5f9add7354896f6baa, Roles: SuperAdmin
+2024-08-18T16:13:16.686Z - Creating Tenant: Tenant Name: superadmin
+2024-08-18T16:13:16.730Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-18T16:14:03.498Z - Decoded Token: User ID: 66c21d5f9add7354896f6baa, Roles: SuperAdmin
+2024-08-18T16:14:03.567Z - Creating Tenant: Tenant Name: superadmin
+2024-08-18T16:14:03.602Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-18T16:14:49.040Z - Decoded Token: User ID: 66c21d5f9add7354896f6baa, Roles: SuperAdmin
+2024-08-18T16:14:49.136Z - Creating Tenant: Tenant Name: superadmin
+2024-08-18T16:14:49.194Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-18T16:46:46.302Z - Decoded Token: User ID: 66c21d5f9add7354896f6baa, Roles: SuperAdmin
+2024-08-18T16:46:46.388Z - Creating Tenant: Tenant Name: Ashlee Herken
+2024-08-18T16:46:46.443Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-19T10:09:03.952Z - Decoded Token: User ID: 66c21d5f9add7354896f6baa, Roles: SuperAdmin
+2024-08-19T10:09:04.021Z - Creating Tenant: Tenant Name: Ashlee Herken
+2024-08-19T10:09:04.059Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-19T10:13:18.742Z - Decoded Token: User ID: 66c21d5f9add7354896f6baa, Roles: SuperAdmin
+2024-08-19T10:13:18.820Z - Creating Tenant: Tenant Name: Ashlee Herken
+2024-08-19T10:13:18.859Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-19T10:13:55.113Z - Decoded Token: User ID: 66c21d5f9add7354896f6baa, Roles: SuperAdmin
+2024-08-19T10:13:55.182Z - Creating Tenant: Tenant Name: Ashlee Herken
+2024-08-19T10:13:55.227Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-19T10:15:11.787Z - Error Registering User: tenant is not defined
+2024-08-19T10:15:47.063Z - Error Registering User: tenant is not defined
+2024-08-19T10:20:04.205Z - Error Registering User: tenant is not defined
+2024-08-19T10:23:25.725Z - Error Registering User: Cannot read properties of undefined (reading '_id')
+2024-08-19T10:23:53.332Z - Error Registering User: Cannot read properties of undefined (reading 'id')
+2024-08-19T10:25:26.131Z - Error Registering User: tenant is not defined
+2024-08-19T10:31:47.279Z - Error Registering User: tenant is not defined
+2024-08-19T10:35:07.678Z - Error Registering User: tenant is not defined
+2024-08-19T10:47:58.024Z - Error Registering User: tenant is not defined
+2024-08-19T10:52:35.755Z - Error Registering User: Tenant is not defined
+2024-08-19T10:52:47.334Z - Error Registering User: Tenant is not defined
+2024-08-19T11:37:05.533Z - Decoded Token: User ID: 66c21d5f9add7354896f6baa, Roles: SuperAdmin
+2024-08-19T11:37:05.615Z - Creating Tenant: Tenant Name: Ashlee Herken
+2024-08-19T11:37:05.669Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-19T11:47:10.430Z - Email Verified: User superadmin verified their email.
+2024-08-19T11:48:59.474Z - Email Verified: User superadmin verified their email.
+2024-08-19T11:50:15.355Z - Email Verified: User superadmin verified their email.
+2024-08-19T11:51:16.723Z - Invalid Verification Token: Token: undefined
+2024-08-19T11:51:22.798Z - Invalid Verification Token: Token: undefined
+2024-08-19T11:53:29.315Z - Invalid Verification Token: Token: undefined
+2024-08-19T11:55:40.275Z - Invalid Verification Token: Token: undefined
+2024-08-19T11:55:42.203Z - Invalid Verification Token: Token: undefined
+2024-08-19T12:02:26.133Z - Login Attempt without Email Verification: Email: stormymeadowlark@gmail.com
+2024-08-19T12:04:43.345Z - Login Attempt without Email Verification: Email: stormymeadowlark@gmail.com
+2024-08-19T12:15:26.050Z - Invalid Verification Token: Token: undefined
+2024-08-19T12:16:31.443Z - Invalid Verification Token: Token: undefined
+2024-08-19T12:16:54.725Z - Invalid Verification Token: Token: undefined
+2024-08-19T12:33:44.926Z - Email Verified: User SME_Ashlee verified their email.
+2024-08-19T12:36:13.244Z - User Login: User SME_Ashlee logged in.
+2024-08-19T12:49:36.496Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYWEiLCJyb2xlIjoiU3VwZXJBZG1pbiIsInRlbmFudCI6eyJpZCI6IjY2YzIxZDVmOWFkZDczNTQ4OTZmNmJhNCIsIm5hbWUiOiJEZWZhdWx0IFRlbmFudCJ9LCJpYXQiOjE3MjM5OTc1MzUsImV4cCI6MTcyNjU4OTUzNX0.HKYaHbllqRwnr4GANYHqwKtTYWmvSNORIk2-qVyFD-Q
+2024-08-19T12:49:36.497Z - Decoded Token: User ID: 66c21d5f9add7354896f6baa, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T12:49:36.539Z - Access Denied: User not found for ID: 66c21d5f9add7354896f6baa
+2024-08-19T12:49:57.135Z - User Login: User SME_Ashlee logged in.
+2024-08-19T12:50:39.185Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwNzE3OTcsImV4cCI6MTcyNjY2Mzc5N30.z6yL1XPh2U61uKfvvPzVATJc77SYpifOZYRIUEHLudE
+2024-08-19T12:50:39.188Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T12:50:39.257Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T12:53:43.099Z - Error Verifying User: invalid token
+2024-08-19T12:54:02.169Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwNzE3OTcsImV4cCI6MTcyNjY2Mzc5N30.z6yL1XPh2U61uKfvvPzVATJc77SYpifOZYRIUEHLudE
+2024-08-19T12:54:02.170Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T12:54:02.235Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T12:54:13.974Z - Error Verifying User: invalid token
+2024-08-19T12:54:21.728Z - Error Verifying User: invalid token
+2024-08-19T12:54:34.319Z - No Token Provided: Authorization header missing
+2024-08-19T12:54:38.658Z - Error Verifying User: invalid token
+2024-08-19T12:54:51.523Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwNzE3OTcsImV4cCI6MTcyNjY2Mzc5N30.z6yL1XPh2U61uKfvvPzVATJc77SYpifOZYRIUEHLudE
+2024-08-19T12:54:51.525Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T12:54:51.590Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T12:55:10.290Z - Error Verifying User: invalid token
+2024-08-19T12:56:54.638Z - Error Verifying User: invalid token
+2024-08-19T12:57:18.071Z - Error Verifying User: invalid token
+2024-08-19T12:58:15.740Z - Error Verifying User: invalid token
+2024-08-19T12:59:23.966Z - Error Verifying User: invalid token
+2024-08-19T13:00:23.743Z - Error Verifying User: invalid token
+2024-08-19T13:00:34.481Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwNzE3OTcsImV4cCI6MTcyNjY2Mzc5N30.z6yL1XPh2U61uKfvvPzVATJc77SYpifOZYRIUEHLudE
+2024-08-19T13:00:34.490Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T13:00:34.576Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T13:00:55.037Z - Error Verifying User: invalid token
+2024-08-19T13:01:05.666Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwNzE3OTcsImV4cCI6MTcyNjY2Mzc5N30.z6yL1XPh2U61uKfvvPzVATJc77SYpifOZYRIUEHLudE
+2024-08-19T13:01:05.667Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T13:01:05.738Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T13:01:24.505Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwNzE3OTcsImV4cCI6MTcyNjY2Mzc5N30.z6yL1XPh2U61uKfvvPzVATJc77SYpifOZYRIUEHLudE
+2024-08-19T13:01:24.506Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T13:01:24.582Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T13:03:07.111Z - User Login: User SME_Ashlee logged in.
+2024-08-19T13:03:35.464Z - Error Verifying User: invalid token
+2024-08-19T13:03:42.658Z - Error Verifying User: invalid token
+2024-08-19T13:05:21.616Z - Error Verifying User: invalid token
+2024-08-19T13:14:49.409Z - Error Verifying User: invalid token
+2024-08-19T13:15:23.380Z - Error Verifying User: invalid token
+2024-08-19T13:19:04.335Z - Error Verifying User: invalid token
+2024-08-19T13:19:08.966Z - User Login: User SME_Ashlee logged in.
+2024-08-19T13:19:23.863Z - Error Verifying User: invalid token
+2024-08-19T13:20:21.147Z - No Token Provided: Authorization header missing
+2024-08-19T13:20:34.235Z - Error Checking Blacklist: Cannot read properties of undefined (reading 'replace')
+2024-08-19T13:22:35.565Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwNzI1ODcsImV4cCI6MTcyNjY2NDU4N30.lagCILgvxbuR_NKiAHlHVBr6mHyYK6_8EDZypSAKTP4
+2024-08-19T13:22:35.566Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T13:22:35.653Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T13:22:45.146Z - Error Verifying User: invalid token
+2024-08-19T13:28:51.970Z - Error Verifying User: invalid token
+2024-08-19T13:29:12.802Z - User Login: User SME_Ashlee logged in.
+2024-08-19T13:29:29.051Z - Error Verifying User: invalid token
+2024-08-19T13:29:51.899Z - Error Verifying User: invalid token
+2024-08-19T13:29:52.959Z - Error Verifying User: invalid token
+2024-08-19T13:30:01.025Z - Error Verifying User: invalid token
+2024-08-19T13:30:09.042Z - No Token Provided: Authorization header missing
+2024-08-19T13:30:42.860Z - Error Verifying User: invalid token
+2024-08-19T13:30:58.104Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwNzQxNTIsImV4cCI6MTcyNjY2NjE1Mn0.VBR8Bgqb_6U2KhAHNxIC2fRo95S7EAY6s2ckp-pBmsQ
+2024-08-19T13:30:58.106Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T13:30:58.183Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T13:31:02.658Z - Error Checking Blacklist: Cannot read properties of undefined (reading 'replace')
+2024-08-19T16:09:30.729Z - User Login: User SME_Ashlee logged in.
+2024-08-19T16:11:25.476Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwODM3NzAsImV4cCI6MTcyNjY3NTc3MH0.ybUjVCCuPrX9P597yKhJfYhe5Pp_7gPyS3Roxg0Gmjs
+2024-08-19T16:11:25.477Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T16:11:25.550Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T16:32:53.055Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwODM3NzAsImV4cCI6MTcyNjY3NTc3MH0.ybUjVCCuPrX9P597yKhJfYhe5Pp_7gPyS3Roxg0Gmjs
+2024-08-19T16:32:53.060Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T16:32:53.144Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T16:36:00.405Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwODM3NzAsImV4cCI6MTcyNjY3NTc3MH0.ybUjVCCuPrX9P597yKhJfYhe5Pp_7gPyS3Roxg0Gmjs
+2024-08-19T16:36:00.407Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T16:36:00.487Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-19T16:48:43.001Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmMzM2I5MWQwNzM1NDIyMjZhYWY4YjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmMyMWQ1ZjlhZGQ3MzU0ODk2ZjZiYTQiLCJuYW1lIjoiRGVmYXVsdCBUZW5hbnQiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQwODM3NzAsImV4cCI6MTcyNjY3NTc3MH0.ybUjVCCuPrX9P597yKhJfYhe5Pp_7gPyS3Roxg0Gmjs
+2024-08-19T16:48:43.002Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-19T16:48:43.068Z - Profile Retrieved: User SME_Ashlee retrieved their profile.
+2024-08-20T14:10:08.720Z - User Login: User SME_Ashlee logged in.
+2024-08-20T14:11:22.952Z - User Login: User SME_Ashlee logged in.
+2024-08-20T14:26:21.014Z - Error Verifying User: invalid token
+2024-08-20T17:06:01.384Z - Error Verifying User: invalid token
+2024-08-20T19:07:44.882Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:07:44.968Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:07:45.015Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:09:04.393Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:09:04.479Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:09:04.534Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:10:35.988Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:10:36.062Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:10:36.110Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:11:22.897Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:11:22.991Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:11:23.031Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:15:57.137Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:15:57.207Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:15:57.240Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:17:33.106Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:17:33.172Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:17:33.206Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:26:09.208Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:26:09.385Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:26:09.445Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:30:56.411Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:30:56.480Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:30:56.519Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:33:16.924Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:33:16.999Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:33:17.033Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:33:35.127Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:33:35.194Z - Fetching All Tenants: undefined
+2024-08-20T19:33:35.226Z - Tenants Fetched: Count: 1
+2024-08-20T19:35:23.234Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:35:23.357Z - Fetching All Tenants: undefined
+2024-08-20T19:35:23.393Z - Tenants Fetched: Count: 1
+2024-08-20T19:35:34.356Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:35:34.427Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:35:34.467Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:38:02.343Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:38:02.460Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:38:02.503Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-20T19:38:19.641Z - Decoded Token: User ID: 66c33b91d073542226aaf8b7, Roles: SuperAdmin
+2024-08-20T19:38:19.705Z - Creating Tenant: Tenant Name: Stormy Meadowlark
+2024-08-20T19:38:19.746Z - Tenant Created: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-20T19:47:16.121Z - Email Verified: User Stormy Meadowlark verified their email.
+2024-08-20T19:48:15.871Z - Forgot Password Attempt for Non-existent User: Email: undefined
+2024-08-20T19:48:58.781Z - Forgot Password Attempt for Non-existent User: Email: undefined
+2024-08-20T19:50:34.056Z - User Login: User Stormy Meadowlark logged in.
+2024-08-20T19:51:27.915Z - User Login: User Stormy Meadowlark logged in.
+2024-08-20T19:58:01.882Z - User Login: User Stormy Meadowlark logged in.
+2024-08-20T20:16:31.209Z - Error Verifying Role: invalid signature
+2024-08-20T20:18:49.240Z - Error Verifying Role: invalid signature
+2024-08-20T20:18:58.145Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM0ZjE2MGZiZmY0MGE3NDVkM2U3NTIiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM0ZjBhYmZiZmY0MGE3NDVkM2U3NGQiLCJuYW1lIjoiU3Rvcm15IE1lYWRvd2xhcmsiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQxODM4ODEsImV4cCI6MTcyNjc3NTg4MX0.Ks0Xqn2N12fWQJUqaMocIFeQcpm-tQG7754zmT7G6P
+2024-08-20T20:18:58.145Z - Error Verifying Role: invalid signature
+2024-08-20T20:19:18.853Z - User Login: User Stormy Meadowlark logged in.
+2024-08-20T20:19:45.378Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM0ZjE2MGZiZmY0MGE3NDVkM2U3NTIiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM0ZjBhYmZiZmY0MGE3NDVkM2U3NGQiLCJuYW1lIjoiU3Rvcm15IE1lYWRvd2xhcmsiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQxODUxNTgsImV4cCI6MTcyNjc3NzE1OH0.E5DLbYYd10noUixQSXWb1NTzFIavbCmcn9GMCYG9WkI
+2024-08-20T20:19:45.380Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
+2024-08-20T20:19:45.447Z - Profile Retrieved: User Stormy Meadowlark retrieved their profile.
