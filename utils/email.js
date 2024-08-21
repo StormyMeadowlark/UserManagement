@@ -1,14 +1,17 @@
 const nodemailer = require("nodemailer");
+const { decrypt } = require("../config");
 
 const sendEmail = async (to, subject, text, tenant) => {
+  
   // Create a transporter using the tenant's SendGrid API key
+  const sendGridApiKey = decrypt(tenant.sendGridApiKey);
   const transporter = nodemailer.createTransport({
     host: "smtp.sendgrid.net",
     port: 587,
     secure: false,
     auth: {
       user: "apikey", // This is the literal string 'apikey'
-      pass: tenant.sendGridApiKey, // Tenant-specific SendGrid API key
+      pass: sendGridApiKey, // Tenant-specific SendGrid API key
     },
   });
 

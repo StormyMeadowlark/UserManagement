@@ -2,6 +2,8 @@ const crypto = require("crypto");
 const Tenant = require("../models/Tenant");
 const { validationResult } = require("express-validator");
 const { logAction } = require("../utils/logger");
+const { encrypt } = require("../utils/encryption");
+
 
 // Create a new tenant
 exports.createTenant = async (req, res) => {
@@ -86,16 +88,20 @@ exports.updateTenant = async (req, res) => {
     logAction("Validation Error", JSON.stringify(errors.array()));
     return res.status(400).json({ errors: errors.array() });
   }
-
   try {
     logAction("Updating Tenant", `Tenant ID: ${req.params.id}`);
 
-    const { name } = req.body;
+    const updates = req.body;
+
+    // Encrypt sendGridApiKey if it's being updated
+    if (updates.sendGridApiKey) {
+      updates.sendGridApiKey = encrypt(sanitize(updates.sendGridApiKey));
+    }
 
     const tenant = await Tenant.findByIdAndUpdate(
       req.params.id,
-      { name },
-      { new: true }
+      updates, // Apply all updates
+      { new: true, runValidators: true }
     );
 
     if (!tenant) {

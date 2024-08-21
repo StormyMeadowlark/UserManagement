@@ -9,15 +9,9 @@ const path = require("path");
 const { generateApiKey } = require("../utils/apiKeyUtil");
 const { validationResult } = require("express-validator");
 const sanitize = require("sanitize-html");
-const { blacklistedToken } = require("../utils/tokenBlacklist");
+const { encrypt } = require("../utils/encryption");
 require("dotenv").config();
 const Tenant = require("../models/Tenant")
-const BlacklistedToken = require("../models/BlacklistedToken")
-
-
-
-
-
 
 
 exports.verifyEmail = async (req, res) => {
@@ -330,10 +324,12 @@ exports.updateUser = async (req, res) => {
     const { id } = sanitize(req.params);
     const updates = req.body;
 
+    // Hash password if it's being updated
     if (updates.password) {
       updates.password = await hashPassword(sanitize(updates.password));
     }
 
+    // Update the user
     const user = await User.findOneAndUpdate(
       { _id: id, tenant: req.tenant._id },
       updates,

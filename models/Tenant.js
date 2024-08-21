@@ -25,6 +25,8 @@ const TenantSchema = new mongoose.Schema(
         message: (props) => `${props.value} is not a valid phone number!`,
       },
     },
+    verifiedSenderEmail: { type: String },
+    sendGridApiKey: { type: String },
     users: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -84,6 +86,13 @@ const TenantSchema = new mongoose.Schema(
 
 // Add an index to the `name` and `contactEmail` fields
 TenantSchema.index({ name: 1, contactEmail: 1 });
+
+TenantSchema.pre("save", function (next) {
+  if (this.isModified("sendGridApiKey")) {
+    this.sendGridApiKey = encrypt(this.sendGridApiKey);
+  }
+  next();
+});
 
 const Tenant = mongoose.model("Tenant", TenantSchema);
 module.exports = Tenant;
