@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const Tenant = require("../models/Tenant");
 const { validationResult } = require("express-validator");
 const { logAction } = require("../utils/logger");
-const { encrypt } = require("../utils/encryption");
+const { encrypt } = require("../config/config");
 
 
 // Create a new tenant

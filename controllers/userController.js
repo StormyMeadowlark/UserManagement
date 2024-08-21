@@ -9,7 +9,7 @@ const path = require("path");
 const { generateApiKey } = require("../utils/apiKeyUtil");
 const { validationResult } = require("express-validator");
 const sanitize = require("sanitize-html");
-const { encrypt } = require("../utils/encryption");
+const { encrypt } = require("../config/config");
 require("dotenv").config();
 const Tenant = require("../models/Tenant")
 
