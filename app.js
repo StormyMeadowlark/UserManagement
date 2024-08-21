@@ -14,10 +14,12 @@ app.use(express.json()); // Parse JSON request bodies
 app.use(cors()); // Enable CORS for all requests
 
 // MongoDB connection
+console.log("Attempting to connect to MongoDB...");
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log("MongoDB connection error:", err));
+  .connect(process.env.MONGO_URI, {
+  })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 // Import routes
 const tenantRoutes = require("./routes/tenantRoutes");

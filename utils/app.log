@@ -239,3 +239,5 @@
 2024-08-20T20:19:45.378Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM0ZjE2MGZiZmY0MGE3NDVkM2U3NTIiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM0ZjBhYmZiZmY0MGE3NDVkM2U3NGQiLCJuYW1lIjoiU3Rvcm15IE1lYWRvd2xhcmsiLCJzZXJ2aWNlcyI6W119LCJpYXQiOjE3MjQxODUxNTgsImV4cCI6MTcyNjc3NzE1OH0.E5DLbYYd10noUixQSXWb1NTzFIavbCmcn9GMCYG9WkI
 2024-08-20T20:19:45.380Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: Admin, Editor, Viewer, SuperAdmin, Tenant
 2024-08-20T20:19:45.447Z - Profile Retrieved: User Stormy Meadowlark retrieved their profile.
+2024-08-21T13:05:34.262Z - User Login: User Stormy Meadowlark logged in.
+2024-08-21T13:06:00.269Z - User Login: User Stormy Meadowlark logged in.
