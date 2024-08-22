@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const authMiddleware = require("../middleware/authMiddleware");
 const uploadProfilePictureMiddleware = require("../middleware/uploadMiddleware");
-const { verifyApiKey } = require("../middleware/verifyApiKey");
+const verifyApiKey  = require("../middleware/verifyApiKey");
 const checkBlacklist = require("../middleware/checkBlacklist");
 
 // Public routes
@@ -57,8 +57,6 @@ router.post("/reset-password", userController.resetPassword); // Reset password
 
 router.post(
   "/logout",
-  authMiddleware.verifyUser,
-  checkBlacklist,
   userController.logoutUser
 ); // Logout user
 

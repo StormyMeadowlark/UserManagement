@@ -1,6 +1,6 @@
 const Tenant = require("../models/Tenant");
-const { generateApiKey } = require("../utils/apiKeyUtility");
-const { logAction } = require("../utils/logger");
+const { generateApiKey } = require("../utils/apiKeyUtil");
+
 
 exports.generateApiKey = async (req, res) => {
   try {
