@@ -146,4 +146,16 @@ router.put(
 
 router.get("/roles", userController.getRoles); // Get available roles
 
+router.put(
+  "/users/update-tenant",
+  authMiddleware.verifyRole([
+    "Admin",
+    "Editor",
+    "Viewer",
+    "SuperAdmin",
+    "Tenant",
+  ]), // Ensure the user is authenticated
+  userController.updateUserTenant // Call the updateUserTenant function
+);
+
 module.exports = router;

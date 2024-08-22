@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Tenant = require("../client-endpoints/models/Tenant"); // Adjust path as needed
+const Tenant = require("./models/Tenant"); // Adjust path as needed
 const User = require("./models/User"); // Adjust path as needed
 const dotenv = require("dotenv");
 const crypto = require("crypto");
@@ -26,12 +26,6 @@ async function createFirstTenantAndSuperAdmin() {
     const tenant = new Tenant({
       name: tenantName,
       contactEmail: tenantEmail,
-      services: [
-        {
-          serviceType: "UserManagement",
-          apiKey,
-        },
-      ],
       subscriptionPlan: "Premium",
   
     });

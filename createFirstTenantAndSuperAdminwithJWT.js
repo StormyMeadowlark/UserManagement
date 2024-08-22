@@ -12,27 +12,16 @@ async function createFirstTenantAndSuperAdmin() {
     await mongoose.connect(process.env.MONGO_URI);
 
     // Ensure there is no existing tenant with the same contact email or name
-    const existingTenant = await Tenant.findOne({
-      $or: [
-        { contactEmail: "ashlee@stormymeadowlark.com" },
-        { name: "Stormy Meadowlark" },
-      ],
-    });
-
-    if (existingTenant) {
-      throw new Error(
-        "Tenant with the same name or contact email already exists."
-      );
-    }
 
     // Create the first tenant
     const apiKey = crypto.randomBytes(32).toString("hex");
 
     const tenant = new Tenant({
-      name: "Stormy Meadowlark",
-      contactEmail: "ashlee@stormymeadowlark.com",
-      contactPhone: "7852203723",
+      name: "HEM Automotive",
+      contactEmail: "hemauto.marketing@gmail.com",
+      contactPhone: "7857302900",
       apiKey: apiKey,
+      sendGridApiKey: "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",
       subscriptionPlan: "Premium",
       subscriptionStatus: "Active",
       status: "Active",
@@ -44,14 +33,14 @@ async function createFirstTenantAndSuperAdmin() {
     console.log("First tenant created:", tenant);
 
     // Hash the superAdmin password
-    const superAdminPassword = "#StormyMlark2023"; // Replace with your desired password
+    const superAdminPassword = "AriahJean2015!"; // Replace with your desired password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(superAdminPassword, salt);
 
     // Create the superAdmin user
     const superAdmin = new User({
-      username: "Ashlee_Stormy_Meadowlark",
-      email: "herken.ashlee@gmail.com",
+      username: "Ashlee",
+      email: "ashlee.herken@gmail.com",
       password: hashedPassword,
       role: "SuperAdmin",
       tenant: tenant._id, // Associate the superAdmin with the first tenant

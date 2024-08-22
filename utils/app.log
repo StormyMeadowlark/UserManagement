@@ -241,3 +241,249 @@
 2024-08-20T20:19:45.447Z - Profile Retrieved: User Stormy Meadowlark retrieved their profile.
 2024-08-21T13:05:34.262Z - User Login: User Stormy Meadowlark logged in.
 2024-08-21T13:06:00.269Z - User Login: User Stormy Meadowlark logged in.
+2024-08-21T15:28:26.708Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T15:28:27.069Z - Tenant Verified: Tenant Stormy Meadowlark verified with API key
+2024-08-21T15:28:27.071Z - Updating Tenant: Tenant ID: update
+2024-08-21T15:28:27.071Z - Error Updating Tenant: sanitize is not defined
+2024-08-21T15:30:42.869Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T15:30:42.940Z - Fetching All Tenants: undefined
+2024-08-21T15:30:42.973Z - Tenants Fetched: Count: 1
+2024-08-21T15:31:01.480Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T15:31:01.607Z - Tenant Verified: Tenant Stormy Meadowlark verified with API key
+2024-08-21T15:31:01.607Z - Updating Tenant: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T15:31:01.607Z - Error Updating Tenant: sanitize is not defined
+2024-08-21T15:37:12.595Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T15:37:12.717Z - Tenant Verified: Tenant Stormy Meadowlark verified with API key
+2024-08-21T15:37:12.717Z - Updating Tenant: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T15:37:12.717Z - Error Updating Tenant: sanitize is not defined
+2024-08-21T15:37:32.428Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T15:37:32.538Z - Tenant Verified: Tenant Stormy Meadowlark verified with API key
+2024-08-21T15:37:32.538Z - Updating Tenant: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T15:37:32.538Z - Error Updating Tenant: sanitize is not defined
+2024-08-21T15:39:42.300Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T15:39:42.369Z - Creating Tenant: Tenant Name: undefined
+2024-08-21T15:40:18.594Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T15:40:18.668Z - Creating Tenant: Tenant Name: Mine
+2024-08-21T15:40:18.716Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T16:41:29.055Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T16:41:29.154Z - Fetching All Tenants: undefined
+2024-08-21T16:41:29.189Z - Error Fetching Tenants: Invalid initialization vector
+2024-08-21T16:42:34.967Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T16:42:35.036Z - Fetching All Tenants: undefined
+2024-08-21T16:42:35.074Z - Error Fetching Tenants: Invalid initialization vector
+2024-08-21T16:43:32.997Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T16:43:33.078Z - Fetching All Tenants: undefined
+2024-08-21T16:43:33.111Z - Error Fetching Tenants: Invalid initialization vector
+2024-08-21T16:44:01.302Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T16:44:01.393Z - Fetching All Tenants: undefined
+2024-08-21T16:44:01.427Z - Error Fetching Tenants: Invalid initialization vector
+2024-08-21T16:44:13.721Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T16:44:13.810Z - Fetching All Tenants: undefined
+2024-08-21T16:44:13.849Z - Error Fetching Tenants: Invalid initialization vector
+2024-08-21T16:46:15.067Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T16:46:15.150Z - Fetching All Tenants: undefined
+2024-08-21T16:46:15.203Z - Tenants Fetched: Count: 1
+2024-08-21T16:46:15.204Z - Error Fetching Tenants: Invalid initialization vector
+2024-08-21T16:53:24.540Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T16:53:24.622Z - Fetching All Tenants: undefined
+2024-08-21T16:53:24.653Z - Tenants Fetched: Count: 1
+2024-08-21T16:53:24.653Z - Error Fetching Tenants: Invalid initialization vector
+2024-08-21T16:56:44.132Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T16:56:44.198Z - Fetching All Tenants: undefined
+2024-08-21T16:56:44.243Z - Tenants Fetched: Count: 1
+2024-08-21T16:56:44.244Z - Error Fetching Tenants: Invalid initialization vector
+2024-08-21T16:58:41.846Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T16:58:41.934Z - Fetching All Tenants: undefined
+2024-08-21T16:58:41.969Z - Tenants Fetched: Count: 1
+2024-08-21T17:13:35.822Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:13:35.940Z - Fetching All Tenants: undefined
+2024-08-21T17:13:36.001Z - Tenants Fetched: Count: 1
+2024-08-21T17:13:46.102Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:13:46.170Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:13:46.171Z - Error Creating Tenant: Cannot read properties of undefined (reading 'trim')
+2024-08-21T17:14:27.717Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:14:27.785Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:14:27.786Z - Error Creating Tenant: Cannot read properties of undefined (reading 'trim')
+2024-08-21T17:15:04.845Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:15:05.097Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:15:05.097Z - Error Creating Tenant: Cannot read properties of undefined (reading 'trim')
+2024-08-21T17:15:36.763Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:15:36.841Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:15:36.842Z - Error Creating Tenant: Cannot read properties of undefined (reading 'trim')
+2024-08-21T17:23:19.304Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:23:19.414Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:23:19.426Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:23:40.292Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:23:40.369Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:23:40.376Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:24:02.865Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:24:02.930Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:24:02.932Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:24:41.162Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:24:41.231Z - Fetching All Tenants: undefined
+2024-08-21T17:24:41.267Z - Tenants Fetched: Count: 1
+2024-08-21T17:24:58.608Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:24:58.678Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:24:58.680Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:27:24.531Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:27:24.623Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:27:24.628Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:29:19.046Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:29:19.123Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:29:19.123Z - Error Creating Tenant: Invalid key length
+2024-08-21T17:30:21.683Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:30:21.758Z - Fetching All Tenants: undefined
+2024-08-21T17:30:21.790Z - Tenants Fetched: Count: 1
+2024-08-21T17:30:35.868Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:30:35.978Z - Tenant Verified: Tenant Stormy Meadowlark verified with API key
+2024-08-21T17:30:35.979Z - Updating Tenant: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T17:30:35.979Z - Error Updating Tenant: Invalid key length
+2024-08-21T17:32:46.258Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:32:46.402Z - Tenant Verified: Tenant Stormy Meadowlark verified with API key
+2024-08-21T17:32:46.402Z - Updating Tenant: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T17:32:46.470Z - Tenant Updated: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T17:33:11.788Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:33:11.906Z - Tenant Verified: Tenant Skynetrix verified with API key
+2024-08-21T17:33:11.906Z - Fetching Tenant by ID: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T17:33:11.944Z - Tenant Fetched: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T17:40:53.463Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:40:53.535Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:40:53.554Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:42:30.325Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:42:30.406Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:42:30.409Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:46:31.736Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:46:31.830Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:46:31.835Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:47:11.557Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:47:11.638Z - Creating Tenant: Tenant Name: Skynetrix
+2024-08-21T17:47:11.646Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:48:25.338Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:48:25.435Z - Fetching All Tenants: undefined
+2024-08-21T17:48:25.468Z - Tenants Fetched: Count: 1
+2024-08-21T17:49:40.718Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:49:40.877Z - Tenant Verified: Tenant Skynetrix verified with API key
+2024-08-21T17:49:40.878Z - Updating Tenant: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T17:49:40.937Z - Tenant Updated: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T17:49:57.174Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:49:57.273Z - Tenant Verified: Tenant Skynetrix Tech verified with API key
+2024-08-21T17:49:57.273Z - Updating Tenant: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T17:49:57.319Z - Tenant Updated: Tenant ID: 66c4f0abfbff40a745d3e74d
+2024-08-21T17:50:34.560Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:50:34.631Z - Creating Tenant: Tenant Name: Skynetrix Tech
+2024-08-21T17:50:34.647Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:51:45.993Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:51:46.061Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T17:51:46.063Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:51:58.342Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:51:58.414Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T17:51:58.416Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:52:02.908Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:52:03.045Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T17:52:03.050Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:52:28.325Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:52:28.429Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T17:52:28.442Z - Error Creating Tenant: encrypt is not defined
+2024-08-21T17:53:14.299Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:53:14.407Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T17:53:14.459Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T17:55:50.438Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:55:50.513Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T17:55:50.569Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T17:58:04.645Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T17:58:04.744Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T17:58:04.787Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:12:53.510Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:12:53.595Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T18:12:53.650Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:16:17.549Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:16:17.638Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T18:16:17.684Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:16:29.481Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:16:29.765Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T18:16:29.825Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:20:45.640Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:20:45.725Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T18:20:45.771Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:21:04.621Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:21:04.720Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T18:21:04.768Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:21:17.520Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:21:17.608Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T18:21:17.648Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:21:26.277Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:21:26.345Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T18:21:26.382Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:22:26.091Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:22:26.159Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T18:22:35.654Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:22:35.794Z - Creating Tenant: Tenant Name: HEM Automotive
+2024-08-21T18:22:35.837Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:22:53.320Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:22:53.416Z - Creating Tenant: Tenant Name: value
+2024-08-21T18:22:53.456Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:24:05.071Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:24:05.155Z - Creating Tenant: Tenant Name: value
+2024-08-21T18:24:05.202Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:27:09.901Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:27:09.977Z - Creating Tenant: Tenant Name: value
+2024-08-21T18:27:10.020Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:42:11.996Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:42:12.092Z - Creating Tenant: Tenant Name: value
+2024-08-21T18:42:12.137Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:42:39.547Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:42:39.644Z - Creating Tenant: Tenant Name: valuse
+2024-08-21T18:42:39.683Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:44:05.723Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:44:05.801Z - Creating Tenant: Tenant Name: valuse
+2024-08-21T18:44:05.859Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:44:32.593Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:44:32.689Z - Creating Tenant: Tenant Name: valuse
+2024-08-21T18:44:32.733Z - Tenant Created: Tenant ID: 66c63590c994bc1f868bb32d
+2024-08-21T18:45:03.605Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:45:03.690Z - Creating Tenant: Tenant Name: valussse
+2024-08-21T18:45:03.725Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:45:49.239Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:45:49.323Z - Creating Tenant: Tenant Name: valussse
+2024-08-21T18:45:49.362Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:47:48.585Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:47:48.663Z - Creating Tenant: Tenant Name: valussse
+2024-08-21T18:47:48.721Z - Tenant Created: Tenant ID: 66c6365461ce1b82bfbf668b
+2024-08-21T18:47:59.043Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:47:59.124Z - Creating Tenant: Tenant Name: valsse
+2024-08-21T18:47:59.168Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:48:54.228Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:48:54.323Z - Creating Tenant: Tenant Name: valsse
+2024-08-21T18:48:54.373Z - Tenant Created: Tenant ID: 66c63696579b58635601b9a1
+2024-08-21T18:49:10.797Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:49:10.879Z - Creating Tenant: Tenant Name: vaaalsse
+2024-08-21T18:49:10.923Z - Error Creating Tenant: E11000 duplicate key error collection: test.tenants index: email_1 dup key: { email: null }
+2024-08-21T18:59:11.013Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:59:11.194Z - Tenant Created: Tenant ID: 66c638ff3f66be66398a6321
+2024-08-21T18:59:16.373Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T18:59:16.516Z - Tenant Created: Tenant ID: 66c639043f66be66398a6325
+2024-08-21T19:00:16.204Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T19:00:16.320Z - Tenant Created: Tenant ID: 66c639403f66be66398a6329
+2024-08-21T19:01:28.265Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T19:01:28.393Z - Tenant Created: Tenant ID: 66c639883f66be66398a632d
+2024-08-21T19:01:58.158Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T19:01:58.293Z - Tenant Created: Tenant ID: 66c639a63f66be66398a6331
+2024-08-21T19:02:47.903Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T19:02:48.023Z - Tenant Created: Tenant ID: 66c639d73f66be66398a6335
+2024-08-21T19:24:47.174Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-21T19:25:56.591Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-21T19:26:29.833Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-21T19:27:05.268Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T19:27:05.501Z - Tenant Created: Tenant ID: 66c63f89cdcd4e3731134c09
+2024-08-21T19:36:19.576Z - Decoded Token: User ID: 66c4f160fbff40a745d3e752, Roles: SuperAdmin
+2024-08-21T19:36:19.618Z - Access Denied: User not found for ID: 66c4f160fbff40a745d3e752
+2024-08-21T19:36:25.545Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T10:25:31.312Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T10:26:31.034Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T11:37:04.022Z - Decoded Token: User ID: 66c71e53df647179dcefaaa2, Roles: SuperAdmin
+2024-08-22T11:37:04.191Z - Tenant Created: Tenant ID: 66c722e0c17e4a7ff29243a6
+2024-08-22T14:12:59.332Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T14:16:31.112Z - Decoded Token: User ID: 66c7469cdf647179dcefaab5, Roles: SuperAdmin
+2024-08-22T14:29:51.205Z - Email Verified: User AshleeHerken verified their email.
+2024-08-22T15:09:04.987Z - Email Verified: User AshleeHerken verified their email.
+2024-08-22T15:19:18.389Z - Invalid Verification Token: Token: 0a1cc3a707be862ef78a7d9357f7540023702a41

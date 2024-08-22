@@ -102,7 +102,7 @@ exports.loginUser = async (req, res) => {
 
 exports.registerUser = async (req, res) => {
   try {
-    const { name, username, email, password, tenant } = req.body;
+    const { name, username, email, password, tenant, role } = req.body;
 
     // Find the tenant by name
     const tenantObj = await Tenant.findOne({ name: tenant });
@@ -115,6 +115,7 @@ exports.registerUser = async (req, res) => {
       name,
       username,
       email,
+      role,
       password,
       tenant: tenantObj._id, // Associate the user with the tenant
       verificationToken,
@@ -126,11 +127,13 @@ exports.registerUser = async (req, res) => {
       "host"
     )}/api/users/verify-email/${verificationToken}`;
 
+    // Send verification email
     await sendEmail(
       newUser.email,
+      tenantObj.verifiedSenderEmail,
       "Email Verification",
       `Please verify your email by clicking on the following link:\n\n${verificationUrl}`,
-      tenantObj // Pass tenant-specific info
+      tenantObj.sendGridApiKey // Pass tenant-specific info
     );
 
     res.status(201).json({
@@ -646,7 +649,42 @@ exports.resendVerificationEmail = async (req, res) => {
       });
   }
 };
+exports.updateUserTenant = async (req, res) => {
+  try {
+    const { tenantId } = req.body; // New tenant ID provided in the request
+    const userId = req.user._id; // Assuming user is authenticated
 
+    // Find the new tenant by ID
+    const newTenant = await Tenant.findById(tenantId);
+    if (!newTenant) {
+      return res.status(404).json({ error: "Tenant not found" });
+    }
+
+    // Update the user's tenant
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { tenant: newTenant._id },
+      { new: true }
+    ).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    logAction(
+      "User Tenant Updated",
+      `User ${user.username} changed tenant to ${newTenant.name}.`
+    );
+    res
+      .status(200)
+      .json({ message: "User tenant updated successfully", data: { user } });
+  } catch (error) {
+    logAction("Error Updating User Tenant", error.message);
+    res
+      .status(500)
+      .json({ error: "Error updating user tenant", details: error.message });
+  }
+};
 exports.uploadProfilePicture = (req, res) => {
   const file = req.file;
 

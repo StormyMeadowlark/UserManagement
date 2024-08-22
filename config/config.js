@@ -1,11 +1,10 @@
-// config.js
-const dotenv = require("dotenv");
 const crypto = require("crypto");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
-const ENCRYPTION_IV = process.env.ENCRYPTION_IV;
+const ENCRYPTION_KEY = Buffer.from(process.env.ENCRYPTION_KEY, "hex"); // Ensure it's a 32-byte key
+const ENCRYPTION_IV = Buffer.from(process.env.ENCRYPTION_IV, "hex"); // Ensure it's a 16-byte IV
 
 const encrypt = (text) => {
   const cipher = crypto.createCipheriv(
@@ -32,5 +31,4 @@ const decrypt = (encryptedText) => {
 module.exports = {
   encrypt,
   decrypt,
-  // other configs...
 };
