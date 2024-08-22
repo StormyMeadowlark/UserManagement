@@ -53,10 +53,13 @@ exports.loginUser = async (req, res) => {
     const email = sanitize(req.body.email);
     const password = sanitize(req.body.password);
 
+    console.log("Sanitized login attempt:", { email }); // Added logging
+
     const user = await User.findOne({ email }).populate("tenant");
 
     if (!user) {
       logAction("Invalid Login Attempt", `Email: ${email}`);
+      console.log("User not found:", email); // Added logging
       return res.status(400).json({ error: "Invalid credentials" });
     }
 
@@ -68,6 +71,8 @@ exports.loginUser = async (req, res) => {
     }
 
     const isMatch = await comparePassword(password, user.password);
+    console.log("Password match result:", isMatch); // Added logging
+
     if (!isMatch) {
       logAction("Invalid Password Attempt", `Email: ${email}`);
       return res.status(400).json({ error: "Invalid credentials" });

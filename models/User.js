@@ -56,10 +56,6 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
     verificationToken: String, // Token for email verification
-    apiKey: {
-      type: String,
-      select: false, // Prevent API key from being returned in queries by default
-    },
   },
   { timestamps: true }
 );

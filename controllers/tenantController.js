@@ -25,12 +25,23 @@ exports.createTenant = async (req, res) => {
     const tenant = new Tenant({
       name,
       contactEmail,
-      apiKey,
       sendGridApiKey: encryptedSendGridApiKey,
       verifiedSenderEmail,
     });
 
     await tenant.save();
+
+    // Hash the API key before saving
+    const salt = await bcrypt.genSalt(10);
+    const hashedApiKey = await bcrypt.hash(apiKey, salt);
+
+    // Save the API key in the ApiKey model
+    const newApiKey = new ApiKey({
+      userId: tenant._id, // Assuming tenant ID can be used here
+      key: hashedApiKey,
+    });
+
+    await newApiKey.save();
 
     logAction("Tenant Created", `Tenant ID: ${tenant._id}`);
     res.status(201).json({ tenant, apiKey });
