@@ -5,7 +5,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const uploadProfilePictureMiddleware = require("../middleware/uploadMiddleware");
 const verifyApiKey  = require("../middleware/verifyApiKey");
 const checkBlacklist = require("../middleware/checkBlacklist");
-const tenantMiddleware = require("../middleware/tenantMiddleware");
+const attachTenant = require("../utils/attachTenant")
 
 
 // Public routes
@@ -45,12 +45,14 @@ router.post(
 // Admin/SuperAdmin routes
 router.get(
   "/",
-  authMiddleware.verifyRole("Admin", "SuperAdmin"),
+attachTenant,
+  authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   userController.getAllUsers
 ); // Get all users
 
 router.get(
   "/:id",
+  attachTenant,
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   checkBlacklist,
   userController.getUserById
@@ -58,6 +60,7 @@ router.get(
 
 router.put(
   "/:id",
+  attachTenant,
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   checkBlacklist,
   userController.updateUser
@@ -65,6 +68,7 @@ router.put(
 
 router.delete(
   "/:id",
+  attachTenant,
   authMiddleware.verifyRole(["SuperAdmin"]),
   checkBlacklist,
   userController.deleteUser
@@ -72,12 +76,14 @@ router.delete(
 
 router.post(
   "/generate-api-key/:userId",
+  attachTenant,
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   userController.generateApiKeyForUser
 ); // Generate API key for user
 
 router.post(
   "/upload-profile-picture",
+  attachTenant,
   authMiddleware.verifyRole([
     "Admin",
     "Editor",
@@ -93,12 +99,14 @@ router.post("/resend-verification", userController.resendVerificationEmail); // 
 
 router.get(
   "/users/search",
+  attachTenant,
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   userController.searchUsers
 ); // Search users
 
 router.put(
   "/users/:id/deactivate",
+  attachTenant,
   authMiddleware.verifyRole(["SuperAdmin"]),
   userController.deactivateUser
 ); // Deactivate user
@@ -107,12 +115,14 @@ router.post("/refresh-token", userController.refreshToken); // Refresh JWT token
 
 router.put(
   "/users/:id/activate",
+  attachTenant,
   authMiddleware.verifyRole(["SuperAdmin"]),
   userController.activateUser
 ); // Activate user
 
 router.put(
   "/users/:id/role",
+  attachTenant,
   authMiddleware.verifyRole(["SuperAdmin"]),
   userController.updateUserRole
 ); // Update user role
@@ -121,6 +131,7 @@ router.get("/roles", userController.getRoles); // Get available roles
 
 router.put(
   "/users/update-tenant",
+  attachTenant,
   authMiddleware.verifyRole([
     "Admin",
     "Editor",

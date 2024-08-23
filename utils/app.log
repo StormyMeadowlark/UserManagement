@@ -587,3 +587,22 @@
 2024-08-23T13:49:35.031Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
 2024-08-23T13:52:39.557Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQxOTEzMSwiZXhwIjoxNzI3MDExMTMxfQ.XGKUV4AmHBgVQHRSBNkv1TwRsWz6hmfUdPVkpekCdq
 2024-08-23T13:52:39.559Z - Error Verifying Role: invalid signature
+2024-08-23T15:39:34.060Z - Error Fetching Users: Cannot read properties of undefined (reading '_id')
+2024-08-23T15:39:52.151Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQyMTQxOSwiZXhwIjoxNzI3MDEzNDE5fQ.vsBlGX68RkoB8EojuSvcVEa0fP00TUdS8sQoLRfazps
+2024-08-23T15:39:52.153Z - Token Decoding: Decoded token for user ID: 66c7678b735ddfaa1972c61f
+2024-08-23T15:39:52.238Z - User Found: User ashlee found with role: SuperAdmin
+2024-08-23T15:40:36.108Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQyMTQxOSwiZXhwIjoxNzI3MDEzNDE5fQ.vsBlGX68RkoB8EojuSvcVEa0fP00TUdS8sQoLRfazps
+2024-08-23T15:40:36.111Z - Token Decoding: Decoded token for user ID: 66c7678b735ddfaa1972c61f
+2024-08-23T15:40:36.188Z - User Found: User ashlee found with role: SuperAdmin
+2024-08-23T15:40:36.189Z - Request Tenant Missing: Request is missing tenant information
+2024-08-23T15:41:02.864Z - User Login: User Username logged in.
+2024-08-23T15:41:22.532Z - Profile Retrieved: User Username retrieved their profile.
+2024-08-23T15:41:30.028Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM4YTZiMzY4ZTUzMTc4ZjBkNjQwYjIiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQyNzY2MiwiZXhwIjoxNzI3MDE5NjYyfQ.LCb8YEpmoPGNqNvjfRggHs_I90OwHj3mNpMd-v31aRY
+2024-08-23T15:41:30.030Z - Token Decoding: Decoded token for user ID: 66c8a6b368e53178f0d640b2
+2024-08-23T15:41:30.123Z - User Found: User Username found with role: Admin
+2024-08-23T15:41:30.123Z - Request Tenant Missing: Request is missing tenant information
+2024-08-23T15:46:08.264Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM4YTZiMzY4ZTUzMTc4ZjBkNjQwYjIiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQyNzY2MiwiZXhwIjoxNzI3MDE5NjYyfQ.LCb8YEpmoPGNqNvjfRggHs_I90OwHj3mNpMd-v31aRY
+2024-08-23T15:46:08.266Z - Token Decoding: Decoded token for user ID: 66c8a6b368e53178f0d640b2
+2024-08-23T15:46:08.335Z - User Found: User Username found with role: Admin
+2024-08-23T15:46:08.335Z - Access Granted: User Username granted access
+2024-08-23T15:46:08.369Z - Users Retrieved: Tenant ID: 66c722e0c17e4a7ff29243a6, Users Count: 3
