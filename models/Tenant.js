@@ -18,6 +18,12 @@ const TenantSchema = new mongoose.Schema(
       trim: true,
       unique: true, // Ensure that each tenant has a unique contact email
     },
+    domain: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true, // Ensure that each tenant has a unique domain
+    },
     sendGridApiKey: {
       type: String,
       // Encrypt the key before storing

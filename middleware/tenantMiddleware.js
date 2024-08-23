@@ -1,40 +1,22 @@
-
-const { logAction } = require("../utils/logger");
-const sanitize = require("sanitize-html");
-
-const bcrypt = require("bcrypt");
-const Tenant = require("../models/Tenant"); // Adjust the path to your Tenant model if necessary
+const Tenant = require("../models/Tenant");
 
 const tenantMiddleware = async (req, res, next) => {
+  const domain = req.headers.host.split(":")[0]; // Extract the domain from the request
+
   try {
-    const apiKey = req.headers["x-api-key"]; // Assuming the API key is passed in the request headers
-    if (!apiKey) {
-      return res.status(400).json({ error: "API key is required" });
+    // Find the tenant associated with the domain
+    const tenant = await Tenant.findOne({ domain });
+
+    if (!tenant) {
+      return res.status(404).json({ message: "Tenant not found." });
     }
 
-    const tenant = await Tenant.findOne({ apiKey }); // Fetch the tenant using the API key
-    if (!tenant || !tenant.hashedApiKey) {
-      return res
-        .status(404)
-        .json({ error: "Tenant not found or invalid hashed API key" });
-    }
-
-    console.log("API Key:", apiKey);
-    console.log("Hashed API Key:", tenant.ApiKey);
-
-    const isValid = await bcrypt.compare(apiKey, tenant.ApiKey); // Compare the API key with the hashed version
-    if (!isValid) {
-      return res.status(401).json({ error: "Invalid API key" });
-    }
-
+    req.tenant = tenant; // Attach tenant information to the request
     next();
   } catch (error) {
-    console.error("Error verifying tenant:", error);
-    return res
-      .status(500)
-      .json({ error: "Server error", details: error.message });
+    console.error("Error fetching tenant information:", error);
+    return res.status(500).json({ message: "Internal server error." });
   }
 };
 
 module.exports = tenantMiddleware;
-

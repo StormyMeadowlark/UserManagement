@@ -26,7 +26,11 @@ router.get(
 router.put(
   "/:id",
   attachTenant,
-  authMiddleware.verifyRole(["Admin", "Editor", "Viewer"]),
+  authMiddleware.verifyRole([
+    "Admin",
+    "Editor",
+    "Viewer",
+  ]),
   tenantController.updateTenant
 );
 router.delete(

@@ -12,7 +12,7 @@ exports.createTenant = async (req, res) => {
   }
 
   try {
-    const { name, contactEmail, sendGridApiKey, verifiedSenderEmail } =
+    const { name, contactEmail, sendGridApiKey, verifiedSenderEmail, domain } =
       req.body;
 
     // Generate a unique API key for the tenant
@@ -29,6 +29,7 @@ exports.createTenant = async (req, res) => {
     const tenant = new Tenant({
       name,
       contactEmail,
+      domain,
       sendGridApiKey: encryptedSendGridApiKey,
       verifiedSenderEmail,
       apiKey: hashedApiKey, // Store the hashed API key in the Tenant model

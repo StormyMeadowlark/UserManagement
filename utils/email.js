@@ -4,13 +4,13 @@ const { decrypt } = require("../config/config");
 const sendEmail = async (to, from, subject, text, apikey) => {
   try {
     // Log the encrypted API key for debugging
-    console.log("Encrypted API Key:", apikey);
+    //console.log("Encrypted API Key:", apikey);
 
     // Decrypt the tenant's SendGrid API key
     const decryptedApiKey = decrypt(apikey);
 
     // Log the decrypted API key for debugging
-    console.log("Decrypted API Key:", decryptedApiKey);
+    //console.log("Decrypted API Key:", decryptedApiKey);
 
     // Validate the decrypted API key
     if (!decryptedApiKey) {
