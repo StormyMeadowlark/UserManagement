@@ -1,9 +1,9 @@
-const Tenant = require("../models/Tenant");
+const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const { validationResult } = require("express-validator");
+const Tenant = require("../models/Tenant");
 const { logAction } = require("../utils/logger");
 const { encrypt } = require("../config/config");
-// Create a new tenant
+
 exports.createTenant = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -18,6 +18,10 @@ exports.createTenant = async (req, res) => {
     // Generate a unique API key for the tenant
     const apiKey = crypto.randomBytes(32).toString("hex");
 
+    // Hash the API key before storing
+    const salt = await bcrypt.genSalt(10);
+    const hashedApiKey = await bcrypt.hash(apiKey, salt);
+
     // Encrypt the SendGrid API key before storing
     const encryptedSendGridApiKey = encrypt(sendGridApiKey);
 
@@ -27,24 +31,13 @@ exports.createTenant = async (req, res) => {
       contactEmail,
       sendGridApiKey: encryptedSendGridApiKey,
       verifiedSenderEmail,
+      apiKey: hashedApiKey, // Store the hashed API key in the Tenant model
     });
 
     await tenant.save();
 
-    // Hash the API key before saving
-    const salt = await bcrypt.genSalt(10);
-    const hashedApiKey = await bcrypt.hash(apiKey, salt);
-
-    // Save the API key in the ApiKey model
-    const newApiKey = new ApiKey({
-      userId: tenant._id, // Assuming tenant ID can be used here
-      key: hashedApiKey,
-    });
-
-    await newApiKey.save();
-
     logAction("Tenant Created", `Tenant ID: ${tenant._id}`);
-    res.status(201).json({ tenant, apiKey });
+    res.status(201).json({ tenant, apiKey }); // Return the plain API key to the client
   } catch (error) {
     logAction("Error Creating Tenant", error.message);
     if (error.code === 11000) {
@@ -107,7 +100,41 @@ exports.updateTenant = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+exports.regenerateApiKey = async (req, res) => {
+  try {
+    const { tenantId } = req.params;
 
+    // Find the tenant by ID
+    const tenant = await Tenant.findById(tenantId);
+    if (!tenant) {
+      return res.status(404).json({ error: "Tenant not found" });
+    }
+
+    // Generate a new API key
+    const newApiKey = crypto.randomBytes(32).toString("hex");
+
+    // Hash the new API key
+    const salt = await bcrypt.genSalt(10);
+    const hashedApiKey = await bcrypt.hash(newApiKey, salt);
+
+    // Update the tenant with the new API key
+    tenant.apiKey = hashedApiKey;
+    await tenant.save();
+
+    logAction(
+      "API Key Regenerated",
+      `New API key generated for tenant ${tenant.name}`
+    );
+
+    // Send the new API key to the client
+    res
+      .status(200)
+      .json({ message: "API key regenerated successfully", apiKey: newApiKey });
+  } catch (error) {
+    logAction("Error Regenerating API Key", error.message);
+    res.status(500).json({ error: "Server error", details: error.message });
+  }
+};
 // Delete a tenant
 exports.deleteTenant = async (req, res) => {
   try {

@@ -12,7 +12,8 @@ const sanitize = require("sanitize-html");
 const { encrypt } = require("../config/config");
 require("dotenv").config();
 const Tenant = require("../models/Tenant")
-
+const bcrypt = require("bcrypt")
+const ApiKey = require("../models/ApiKey");
 
 exports.verifyEmail = async (req, res) => {
   try {
@@ -53,49 +54,44 @@ exports.loginUser = async (req, res) => {
     const email = sanitize(req.body.email);
     const password = sanitize(req.body.password);
 
-    console.log("Sanitized login attempt:", { email }); // Added logging
-
     const user = await User.findOne({ email }).populate("tenant");
 
-    if (!user) {
+    if (!user || !user.emailVerified) {
       logAction("Invalid Login Attempt", `Email: ${email}`);
-      console.log("User not found:", email); // Added logging
-      return res.status(400).json({ error: "Invalid credentials" });
-    }
-
-    if (!user.emailVerified) {
-      logAction("Login Attempt without Email Verification", `Email: ${email}`);
       return res
         .status(400)
-        .json({ error: "Please verify your email before logging in." });
+        .json({ error: "Invalid credentials or email not verified" });
     }
 
     const isMatch = await comparePassword(password, user.password);
-    console.log("Password match result:", isMatch); // Added logging
-
     if (!isMatch) {
       logAction("Invalid Password Attempt", `Email: ${email}`);
       return res.status(400).json({ error: "Invalid credentials" });
     }
 
-    const tenant = user.tenant;
     const token = jwt.sign(
       {
         _id: user._id,
-        tenant: {
-          id: tenant._id,
-          name: tenant.name,
-          services: tenant.services,
-        },
+        tenant: { id: user.tenant._id, name: user.tenant.name },
       },
       process.env.JWT_SECRET,
       { expiresIn: "30d" }
     );
 
+    // Fetch the tenant's API key
+    const tenantApiKey = user.tenant.apiKey;
+
     logAction("User Login", `User ${user.username} logged in.`);
-    res
-      .status(200)
-      .json({ message: "Login successful", data: { token, role: user.role } });
+
+    // Include the tenant's API key in the response
+    res.status(200).json({
+      message: "Login successful",
+      data: {
+        token,
+        role: user.role,
+        apiKey: tenantApiKey, // Include the API key here
+      },
+    });
   } catch (error) {
     logAction("Error Logging In", error.message);
     res
@@ -103,6 +99,7 @@ exports.loginUser = async (req, res) => {
       .json({ error: "Error logging in user", details: error.message });
   }
 };
+
 
 
 exports.registerUser = async (req, res) => {
@@ -146,8 +143,8 @@ exports.registerUser = async (req, res) => {
         "User registered successfully. Please check your email to verify your account.",
     });
   } catch (error) {
-    console.error("Error registering user:", error);
-    res.status(500).json({ error: "Error registering user" });
+    console.error("Error registering user:", error.message);
+    res.status(500).json({ error: `Error registering user: ${error.message}` });
   }
 };
 
@@ -381,19 +378,23 @@ exports.forgotPassword = async (req, res) => {
       "host"
     )}/api/users/reset-password/${resetToken}`;
 
+    // Send password reset email
     await sendEmail(
       user.email,
-      "Password Reset",
+      user.tenant.verifiedSenderEmail, // Ensure you have this field in the tenant model
+      "Password Reset Request",
       `Please click the following link to reset your password:\n\n${resetUrl}`,
-      user.tenant // Pass tenant-specific info
+      user.tenant.sendGridApiKey // Use the tenant-specific SendGrid API key
     );
 
     res
       .status(200)
       .json({ message: "Password reset email sent successfully." });
   } catch (error) {
-    console.error("Error requesting password reset:", error);
-    res.status(500).json({ error: "Error requesting password reset" });
+    console.error("Error requesting password reset:", error.message);
+    res
+      .status(500)
+      .json({ error: `Error requesting password reset: ${error.message}` });
   }
 };
 

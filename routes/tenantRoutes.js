@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const tenantController = require("../controllers/tenantController");
 const authMiddleware = require("../middleware/authMiddleware");
+const tenantMiddleware = require("../middleware/tenantMiddleware")
 
 router.post(
   "/",
@@ -28,5 +29,10 @@ router.delete(
   authMiddleware.verifyRole(["SuperAdmin"]),
   tenantController.deleteTenant
 );
-
+router.post(
+  "/regenerate-api-key/:tenantId",
+  tenantMiddleware,
+  authMiddleware.verifyRole(["SuperAdmin"]),
+  tenantController.regenerateApiKey
+);
 module.exports = router;

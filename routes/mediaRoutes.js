@@ -8,24 +8,24 @@ const upload = require("../middleware/uploadMiddleware"); // Import the correct 
 // Protected routes (Admin and Tenant)
 router.post(
   "/upload",
-  authMiddleware.verifyRole(["Admin", "Tenant", "Viewer", "Editor", "SuperAdmin"]),
+  authMiddleware.verifyUser,
   upload, // Apply the Multer middleware here for handling file uploads
   mediaController.uploadMedia
 );
 
 router.get(
   "/",
-  authMiddleware.verifyRole(["Admin", "Tenant", "Viewer", "Editor", "SuperAdmin"]),
+  authMiddleware.verifyUser,
   mediaController.getAllMedia
 ); // Get all media
 router.get(
   "/:id",
-  authMiddleware.verifyRole(["Admin", "Tenant", "Viewer", "Editor", "SuperAdmin"]),
+  authMiddleware.verifyUser,
   mediaController.getMediaById
 ); // Get media by ID
 router.delete(
   "/:id",
-  authMiddleware.verifyRole(["Admin", "Tenant", "Viewer", "Editor", "SuperAdmin"]),
+  authMiddleware.verifyUser,
   mediaController.deleteMedia
 ); // Delete media
 

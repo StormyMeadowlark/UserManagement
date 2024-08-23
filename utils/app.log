@@ -488,3 +488,102 @@
 2024-08-22T15:09:04.987Z - Email Verified: User AshleeHerken verified their email.
 2024-08-22T15:19:18.389Z - Invalid Verification Token: Token: 0a1cc3a707be862ef78a7d9357f7540023702a41
 2024-08-22T17:15:04.476Z - Invalid Login Attempt: Email: 
+2024-08-22T19:22:17.687Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:23:00.795Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T19:24:23.500Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T19:24:31.932Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:24:48.963Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDM0Njk4OCwiZXhwIjoxNzI2OTM4OTg4fQ.HfIhBA7iRyEDpx-aEkMwtJPtwRQ5gcArTGq39FX17g4
+2024-08-22T19:24:49.044Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:28:43.611Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:28:51.414Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T19:30:41.737Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T19:32:27.176Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T19:34:23.918Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-22T19:34:49.173Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:35:53.436Z - Error Verifying Role: jwt must be provided
+2024-08-22T19:36:34.994Z - Error Verifying Role: jwt must be provided
+2024-08-22T19:39:37.584Z - Error Verifying Role: jwt must be provided
+2024-08-22T19:39:46.274Z - Error Verifying Role: jwt must be provided
+2024-08-22T19:41:08.480Z - Error Verifying Role: jwt must be provided
+2024-08-22T19:41:35.957Z - Email Verified: User HEM Automotive verified their email.
+2024-08-22T19:42:07.209Z - User Login: User HEM Automotive logged in.
+2024-08-22T19:42:40.451Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:43:31.771Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:43:45.422Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:43:53.128Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:44:28.501Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3OTQ1YWUyZWRhZjAxNGI4MTQzNjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDM1NTcyNywiZXhwIjoxNzI2OTQ3NzI3fQ.SyPuftdVPaPtjog52UE6KbgzF2RpdFgxVRku8xpEjho
+2024-08-22T19:44:28.629Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:44:33.309Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3OTQ1YWUyZWRhZjAxNGI4MTQzNjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDM1NTcyNywiZXhwIjoxNzI2OTQ3NzI3fQ.SyPuftdVPaPtjog52UE6KbgzF2RpdFgxVRku8xpEjho
+2024-08-22T19:44:33.381Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:45:34.090Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3OTQ1YWUyZWRhZjAxNGI4MTQzNjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDM1NTcyNywiZXhwIjoxNzI2OTQ3NzI3fQ.SyPuftdVPaPtjog52UE6KbgzF2RpdFgxVRku8xpEjho
+2024-08-22T19:45:34.195Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:46:04.387Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:46:28.957Z - Profile Retrieved: User HEM Automotive retrieved their profile.
+2024-08-22T19:46:46.985Z - Token Check Passed: Token is not blacklisted: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3OTQ1YWUyZWRhZjAxNGI4MTQzNjciLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDM1NTcyNywiZXhwIjoxNzI2OTQ3NzI3fQ.SyPuftdVPaPtjog52UE6KbgzF2RpdFgxVRku8xpEjho
+2024-08-22T19:46:47.077Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:47:06.002Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:47:21.045Z - Profile Updated: User HEM Automotive updated their profile.
+2024-08-22T19:47:47.633Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:49:02.678Z - Invalid Password Attempt: Email: HEMauto.marketing@gmail.com
+2024-08-22T19:49:09.367Z - Invalid Password Attempt: Email: HEMauto.marketing@gmail.com
+2024-08-22T19:49:19.252Z - Invalid Password Attempt: Email: hemauto.marketing@gmail.com
+2024-08-22T19:51:52.511Z - User Login: User ashlee logged in.
+2024-08-22T19:52:05.040Z - User Login: User ashlee logged in.
+2024-08-22T19:52:24.084Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:52:30.462Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T19:52:52.005Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T22:30:07.358Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T22:31:02.184Z - Profile Retrieved: User ashlee retrieved their profile.
+2024-08-22T22:31:19.078Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T22:36:29.661Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-22T22:40:19.516Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-23T02:33:38.776Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-23T11:53:19.356Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-23T11:53:28.076Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-23T11:55:08.000Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-23T11:57:13.188Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-23T11:57:23.437Z - User Login: User ashlee logged in.
+2024-08-23T11:57:59.438Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-23T11:58:09.841Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-23T12:07:20.899Z - Error Verifying Role: Cannot read properties of undefined (reading '_id')
+2024-08-23T12:13:28.997Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQxNDI0MywiZXhwIjoxNzI3MDA2MjQzfQ.5izZTYnMnOVCD5epqKoXlWhD1lvs-s3Fvr-LiEDgIZk
+2024-08-23T12:13:29.001Z - Token Decoding: Decoded token for user ID: 66c7678b735ddfaa1972c61f
+2024-08-23T12:13:29.093Z - User Found: User ashlee found with role: SuperAdmin
+2024-08-23T12:13:29.093Z - Request Tenant Missing: Request is missing tenant information
+2024-08-23T12:16:02.733Z - No API Key Provided: x-api-key header missing
+2024-08-23T12:29:55.175Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQxNDI0MywiZXhwIjoxNzI3MDA2MjQzfQ.5izZTYnMnOVCD5epqKoXlWhD1lvs-s3Fvr-LiEDgIZk
+2024-08-23T12:29:55.179Z - Token Decoding: Decoded token for user ID: 66c7678b735ddfaa1972c61f
+2024-08-23T12:29:55.264Z - Request Tenant Missing: Request is missing tenant information
+2024-08-23T12:29:55.264Z - User Found: User ashlee found with role: SuperAdmin
+2024-08-23T12:34:03.607Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQxNDI0MywiZXhwIjoxNzI3MDA2MjQzfQ.5izZTYnMnOVCD5epqKoXlWhD1lvs-s3Fvr-LiEDgIZk
+2024-08-23T12:34:03.610Z - Token Decoding: Decoded token for user ID: 66c7678b735ddfaa1972c61f
+2024-08-23T12:34:03.700Z - User Found: User ashlee found with role: SuperAdmin
+2024-08-23T12:34:03.700Z - Request Tenant Missing: Request is missing tenant information
+2024-08-23T12:36:02.865Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQxNDI0MywiZXhwIjoxNzI3MDA2MjQzfQ.5izZTYnMnOVCD5epqKoXlWhD1lvs-s3Fvr-LiEDgIZk
+2024-08-23T12:36:02.867Z - Token Decoding: Decoded token for user ID: 66c7678b735ddfaa1972c61f
+2024-08-23T12:36:02.949Z - User Found: User ashlee found with role: SuperAdmin
+2024-08-23T12:36:02.949Z - Request Tenant Missing: Request is missing tenant information
+2024-08-23T12:53:21.607Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQxNDI0MywiZXhwIjoxNzI3MDA2MjQzfQ.5izZTYnMnOVCD5epqKoXlWhD1lvs-s3Fvr-LiEDgIZk
+2024-08-23T12:53:21.609Z - Token Decoding: Decoded token for user ID: 66c7678b735ddfaa1972c61f
+2024-08-23T12:53:21.691Z - User Found: User ashlee found with role: SuperAdmin
+2024-08-23T12:53:21.691Z - Request Tenant Missing: Request is missing tenant information
+2024-08-23T12:53:33.481Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-23T13:01:40.955Z - No API Key Provided: x-api-key header missing
+2024-08-23T13:02:21.003Z - Error Verifying Tenant: data and hash arguments required
+2024-08-23T13:03:51.222Z - Invalid API Key: No tenant found for API key: a10655fbc940f889e9df7b2f0090466e34ff7129ad96d1d27f62cc46015054e5
+2024-08-23T13:06:57.898Z - Error Logging In: bcrypt is not defined
+2024-08-23T13:07:26.116Z - Error Logging In: ApiKey is not defined
+2024-08-23T13:08:29.546Z - API Key Not Found: Tenant ID: 66c722e0c17e4a7ff29243a6
+2024-08-23T13:13:39.987Z - API Key Not Found: Tenant ID: 66c722e0c17e4a7ff29243a6
+2024-08-23T13:14:02.635Z - API Key Not Found: Tenant ID: 66c722e0c17e4a7ff29243a6
+2024-08-23T13:20:49.542Z - User Login: User ashlee logged in.
+2024-08-23T13:21:51.585Z - Error Verifying Tenant: data and hash arguments required
+2024-08-23T13:35:29.891Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQxOTEzMSwiZXhwIjoxNzI3MDExMTMxfQ.XGKUV4AmHBgVQHRSBNkv1TwRsWz6hmfUdPVkpekCdq
+2024-08-23T13:35:29.894Z - Error Verifying Role: invalid signature
+2024-08-23T13:35:37.258Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-23T13:43:07.860Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-23T13:45:26.461Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-23T13:49:25.443Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-23T13:49:35.031Z - Error Verifying Role: Cannot read properties of undefined (reading 'replace')
+2024-08-23T13:52:39.557Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM3Njc4YjczNWRkZmFhMTk3MmM2MWYiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQxOTEzMSwiZXhwIjoxNzI3MDExMTMxfQ.XGKUV4AmHBgVQHRSBNkv1TwRsWz6hmfUdPVkpekCdq
+2024-08-23T13:52:39.559Z - Error Verifying Role: invalid signature

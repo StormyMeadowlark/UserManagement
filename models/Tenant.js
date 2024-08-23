@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcrypt");
 
 const TenantSchema = new mongoose.Schema(
   {
@@ -37,6 +38,12 @@ const TenantSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+TenantSchema.pre("save", async function (next) {
+  if (!this.isModified("apiKey")) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.apiKey = await bcrypt.hash(this.apiKey, salt);
+  next();
+});
 // Add an index to the `name` and `contactEmail` fields for quick lookup
 TenantSchema.index({ name: 1, contactEmail: 1 });
 

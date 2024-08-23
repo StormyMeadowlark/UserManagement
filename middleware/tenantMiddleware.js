@@ -1,34 +1,40 @@
-const Tenant = require("../models/Tenant");
+
 const { logAction } = require("../utils/logger");
 const sanitize = require("sanitize-html");
 
+const bcrypt = require("bcrypt");
+const Tenant = require("../models/Tenant"); // Adjust the path to your Tenant model if necessary
+
 const tenantMiddleware = async (req, res, next) => {
   try {
-    // Extract and sanitize the API key from the headers
-    const apiKey = sanitize(req.headers["x-api-key"]);
-
+    const apiKey = req.headers["x-api-key"]; // Assuming the API key is passed in the request headers
     if (!apiKey) {
-      logAction("No API Key Provided", "x-api-key header missing");
-      return res.status(403).json({ error: "No API key provided" });
+      return res.status(400).json({ error: "API key is required" });
     }
 
-    // Find the tenant associated with the API key
-    const tenant = await Tenant.findOne({ apiKey });
-
-    if (!tenant) {
-      logAction("Invalid API Key", `No tenant found for API key: ${apiKey}`);
-      return res.status(403).json({ error: "Invalid API key" });
+    const tenant = await Tenant.findOne({ apiKey }); // Fetch the tenant using the API key
+    if (!tenant || !tenant.hashedApiKey) {
+      return res
+        .status(404)
+        .json({ error: "Tenant not found or invalid hashed API key" });
     }
 
-    // Attach the tenant to the request object for further use
-    req.tenant = tenant;
-    logAction("Tenant Verified", `Tenant ${tenant.name} verified with API key`);
+    console.log("API Key:", apiKey);
+    console.log("Hashed API Key:", tenant.ApiKey);
+
+    const isValid = await bcrypt.compare(apiKey, tenant.ApiKey); // Compare the API key with the hashed version
+    if (!isValid) {
+      return res.status(401).json({ error: "Invalid API key" });
+    }
+
     next();
   } catch (error) {
-    logAction("Error Verifying Tenant", error.message);
     console.error("Error verifying tenant:", error);
-    res.status(500).json({ error: "Server error", details: error.message });
+    return res
+      .status(500)
+      .json({ error: "Server error", details: error.message });
   }
 };
 
 module.exports = tenantMiddleware;
+

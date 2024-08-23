@@ -5,6 +5,8 @@ const authMiddleware = require("../middleware/authMiddleware");
 const uploadProfilePictureMiddleware = require("../middleware/uploadMiddleware");
 const verifyApiKey  = require("../middleware/verifyApiKey");
 const checkBlacklist = require("../middleware/checkBlacklist");
+const tenantMiddleware = require("../middleware/tenantMiddleware");
+
 
 // Public routes
 router.post("/register", userController.registerUser); // Register a new user
@@ -14,40 +16,19 @@ router.get("/verify-email/:token", userController.verifyEmail); // Email verific
 // Protected routes for logged-in users (with roles)
 router.get(
   "/profile",
-  checkBlacklist,
-  authMiddleware.verifyRole([
-    "Admin",
-    "Editor",
-    "Viewer",
-    "SuperAdmin",
-    "Tenant",
-  ]),
+  authMiddleware.verifyUser,
   userController.getUserProfile
 ); // Get the logged-in user's profile
 
 router.put(
   "/profile",
-  checkBlacklist,
-  authMiddleware.verifyRole([
-    "Admin",
-    "Editor",
-    "Viewer",
-    "SuperAdmin",
-    "Tenant",
-  ]),
+  authMiddleware.verifyUser,
   userController.updateUserProfile
 ); // Update logged-in user's profile
 
 router.post(
   "/change-password",
-  checkBlacklist,
-  authMiddleware.verifyRole([
-    "Admin",
-    "Editor",
-    "Viewer",
-    "SuperAdmin",
-    "Tenant",
-  ]),
+  authMiddleware.verifyUser,
   userController.changePassword
 ); // Change password for logged-in user
 
@@ -57,13 +38,14 @@ router.post("/reset-password", userController.resetPassword); // Reset password
 
 router.post(
   "/logout",
+  authMiddleware.verifyUser,
   userController.logoutUser
 ); // Logout user
 
 // Admin/SuperAdmin routes
 router.get(
   "/",
-  verifyApiKey,
+  tenantMiddleware,
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   checkBlacklist,
   userController.getAllUsers
@@ -71,7 +53,6 @@ router.get(
 
 router.get(
   "/:id",
-  verifyApiKey,
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   checkBlacklist,
   userController.getUserById
@@ -79,7 +60,6 @@ router.get(
 
 router.put(
   "/:id",
-  verifyApiKey,
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   checkBlacklist,
   userController.updateUser
@@ -87,22 +67,19 @@ router.put(
 
 router.delete(
   "/:id",
-  verifyApiKey,
   authMiddleware.verifyRole(["SuperAdmin"]),
   checkBlacklist,
   userController.deleteUser
 ); // Delete a user (SuperAdmin only)
 
 router.post(
-  "/:userId/api-key",
-  verifyApiKey,
+  "/generate-api-key/:userId",
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   userController.generateApiKeyForUser
 ); // Generate API key for user
 
 router.post(
   "/upload-profile-picture",
-  verifyApiKey,
   authMiddleware.verifyRole([
     "Admin",
     "Editor",
