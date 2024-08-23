@@ -9,22 +9,22 @@ const tenantMiddleware = require("../middleware/tenantMiddleware");
 
 
 // Public routes
-router.post("/register", userController.registerUser); // Register a new user
-router.post("/login", userController.loginUser); // Login a user
-router.get("/verify-email/:token", userController.verifyEmail); // Email verification
+router.post("/register", userController.registerUser); // Register a new user tested
+router.post("/login", userController.loginUser); // Login a user tested
+router.get("/verify-email/:token", userController.verifyEmail); // Email verification tested
 
 // Protected routes for logged-in users (with roles)
 router.get(
   "/profile",
   authMiddleware.verifyUser,
   userController.getUserProfile
-); // Get the logged-in user's profile
+); // Get the logged-in user's profile tested
 
 router.put(
   "/profile",
   authMiddleware.verifyUser,
   userController.updateUserProfile
-); // Update logged-in user's profile
+); // Update logged-in user's profile testede
 
 router.post(
   "/change-password",
@@ -40,14 +40,12 @@ router.post(
   "/logout",
   authMiddleware.verifyUser,
   userController.logoutUser
-); // Logout user
+); // Logout user tested
 
 // Admin/SuperAdmin routes
 router.get(
   "/",
-  tenantMiddleware,
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
-  checkBlacklist,
   userController.getAllUsers
 ); // Get all users
 

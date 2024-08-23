@@ -9,30 +9,43 @@ exports.verifyRole = (roles) => {
   return async (req, res, next) => {
     try {
       // Extract and sanitize the token from the Authorization header
-      const token = sanitize(
-        req.header("Authorization").replace("Bearer ", "")
-      );
+      const authHeader = req.header("Authorization");
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        logAction(
+          "Authorization Header Missing",
+          "No Authorization header or incorrect format"
+        );
+        return res.status(401).json({ error: "Unauthorized" });
+      }
 
+      const token = sanitize(authHeader.replace("Bearer ", ""));
       logAction("Token Extraction", `Extracted token: ${token}`);
 
       // Verify the token and decode the payload
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      let decoded;
+      try {
+        decoded = jwt.verify(token, process.env.JWT_SECRET);
+      } catch (err) {
+        logAction(
+          "Token Verification Failed",
+          `Token verification error: ${err.message}`
+        );
+        return res.status(401).json({ error: "Invalid token" });
+      }
       logAction("Token Decoding", `Decoded token for user ID: ${decoded._id}`);
 
       // Find the user by the ID in the token payload and populate the tenant
       const user = await User.findById(decoded._id).populate("tenant");
-
       if (!user) {
         logAction("User Not Found", `No user found with ID: ${decoded._id}`);
         return res.status(403).json({ error: "Access denied" });
       }
-
       logAction(
         "User Found",
         `User ${user.username} found with role: ${user.role}`
       );
 
-      // Ensure that user and tenant exist and check the role
+      // Ensure that user role is valid and matches required roles
       if (!roles.includes(user.role)) {
         logAction(
           "Role Mismatch",
@@ -43,7 +56,7 @@ exports.verifyRole = (roles) => {
         return res.status(403).json({ error: "Access denied" });
       }
 
-      // Ensure that the tenant is properly populated
+      // Ensure tenant association
       if (!user.tenant) {
         logAction(
           "Tenant Missing",
@@ -70,14 +83,11 @@ exports.verifyRole = (roles) => {
 
       // Attach the user to the request object for further use
       req.user = user;
-      logAction(
-        "Access Granted",
-        `User ${user.username} granted access with role: ${user.role}`
-      );
+      logAction("Access Granted", `User ${user.username} granted access`);
       next();
-    } catch (error) {
-      logAction("Error Verifying Role", error.message);
-      res.status(403).json({ error: "Access denied", details: error.message });
+    } catch (err) {
+      logAction("Middleware Error", `Unexpected error: ${err.message}`);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   };
 };
