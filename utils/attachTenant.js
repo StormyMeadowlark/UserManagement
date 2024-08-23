@@ -4,7 +4,7 @@ const Tenant = require("../models/Tenant"); // Adjust path as necessary
 const attachTenant = async (req, res, next) => {
   try {
     // Example: Extract tenant ID from headers, query params, or session
-    const tenantId = req.header("X-Tenant-ID") || req.query.tenantId;
+    const tenantId = req.header("x-tenant-id") || req.query.tenantId;
 
     if (!tenantId) {
       return res.status(400).json({ error: "Tenant ID is required" });
