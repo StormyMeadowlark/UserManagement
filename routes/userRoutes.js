@@ -45,7 +45,7 @@ router.post(
 // Admin/SuperAdmin routes
 router.get(
   "/",
-  authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
+  authMiddleware.verifyRole("Admin", "SuperAdmin"),
   userController.getAllUsers
 ); // Get all users
 

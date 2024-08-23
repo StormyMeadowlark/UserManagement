@@ -22,30 +22,23 @@ exports.verifyRole = (roles) => {
       logAction("Token Extraction", `Extracted token: ${token}`);
 
       // Verify the token and decode the payload
-      let decoded;
-      try {
-        decoded = jwt.verify(token, process.env.JWT_SECRET);
-      } catch (err) {
-        logAction(
-          "Token Verification Failed",
-          `Token verification error: ${err.message}`
-        );
-        return res.status(401).json({ error: "Invalid token" });
-      }
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       logAction("Token Decoding", `Decoded token for user ID: ${decoded._id}`);
 
       // Find the user by the ID in the token payload and populate the tenant
       const user = await User.findById(decoded._id).populate("tenant");
+
       if (!user) {
         logAction("User Not Found", `No user found with ID: ${decoded._id}`);
         return res.status(403).json({ error: "Access denied" });
       }
+
       logAction(
         "User Found",
         `User ${user.username} found with role: ${user.role}`
       );
 
-      // Ensure that user role is valid and matches required roles
+      // Ensure that user and tenant exist and check the role
       if (!roles.includes(user.role)) {
         logAction(
           "Role Mismatch",
@@ -56,7 +49,7 @@ exports.verifyRole = (roles) => {
         return res.status(403).json({ error: "Access denied" });
       }
 
-      // Ensure tenant association
+      // Ensure that the tenant is properly populated
       if (!user.tenant) {
         logAction(
           "Tenant Missing",
@@ -85,9 +78,9 @@ exports.verifyRole = (roles) => {
       req.user = user;
       logAction("Access Granted", `User ${user.username} granted access`);
       next();
-    } catch (err) {
-      logAction("Middleware Error", `Unexpected error: ${err.message}`);
-      res.status(500).json({ error: "Internal Server Error" });
+    } catch (error) {
+      console.error("Error in verifyRole middleware:", error.message);
+      res.status(500).json({ error: "Internal server error" });
     }
   };
 };
