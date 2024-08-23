@@ -106,25 +106,37 @@ exports.registerUser = async (req, res) => {
   try {
     const { name, username, email, password, tenant, role } = req.body;
 
-    // Find the tenant by name
+    // Validate password strength (example)
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ error: "Password must be at least 6 characters long" });
+    }
+
+    // Check if the tenant exists
     const tenantObj = await Tenant.findOne({ name: tenant });
     if (!tenantObj) {
       return res.status(400).json({ error: "Invalid tenant name" });
     }
 
+    // Generate a verification token
     const verificationToken = crypto.randomBytes(20).toString("hex");
+
+    // Create a new user
     const newUser = new User({
       name,
       username,
       email,
       role,
-      password,
-      tenant: tenantObj._id, // Associate the user with the tenant
+      password, // Password will be hashed by schema pre-save hook
+      tenant: tenantObj._id,
       verificationToken,
     });
 
+    // Save the new user
     await newUser.save();
 
+    // Generate verification URL
     const verificationUrl = `${req.protocol}://${req.get(
       "host"
     )}/api/users/verify-email/${verificationToken}`;
@@ -135,9 +147,10 @@ exports.registerUser = async (req, res) => {
       tenantObj.verifiedSenderEmail,
       "Email Verification",
       `Please verify your email by clicking on the following link:\n\n${verificationUrl}`,
-      tenantObj.sendGridApiKey // Pass tenant-specific info
+      tenantObj.sendGridApiKey
     );
 
+    // Send success response
     res.status(201).json({
       message:
         "User registered successfully. Please check your email to verify your account.",

@@ -9,18 +9,20 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      minlength: 3, // Example validation for username
+      minlength: 3,
     },
     email: {
       type: String,
       required: true,
       trim: true,
       lowercase: true,
-      validate: [validator.isEmail, "Invalid email address"], // Email validation
+      unique: true, // Ensure unique email
+      validate: [validator.isEmail, "Invalid email address"],
     },
     password: {
       type: String,
       required: true,
+      minlength: 6, // Example minimum length
     },
     role: {
       type: String,
@@ -29,19 +31,18 @@ const UserSchema = new mongoose.Schema(
     tenant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tenant",
-
     },
     status: {
       type: String,
       enum: ["Active", "Suspended", "Deactivated"],
       default: "Active",
-      index: true, // Index for faster queries
+      index: true,
     },
     lastLogin: {
       type: Date,
     },
     profilePicture: {
-      type: String, // URL to the profile picture stored in cloud storage
+      type: String,
     },
     savedPosts: [
       {
@@ -49,18 +50,17 @@ const UserSchema = new mongoose.Schema(
         ref: "Post",
       },
     ],
-    resetPasswordToken: String, // Token for password reset
-    resetPasswordExpires: Date, // Expiration time for password reset token
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
     emailVerified: {
       type: Boolean,
       default: false,
     },
-    verificationToken: String, // Token for email verification
+    verificationToken: String,
   },
   { timestamps: true }
 );
 
-// Pre-save hook to hash password before saving
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
@@ -68,13 +68,11 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-// Method to compare password for login
 UserSchema.methods.comparePassword = function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-// Indexes
-UserSchema.index({ email: 1, username: 1 }); // Unique index on email and username
+UserSchema.index({ email: 1, username: 1 });
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
