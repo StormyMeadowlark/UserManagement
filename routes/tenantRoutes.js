@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const tenantController = require("../controllers/tenantController");
 const authMiddleware = require("../middleware/authMiddleware");
-const tenantMiddleware = require("../middleware/tenantMiddleware")
 const attachTenant = require("../utils/attachTenant");
 
 router.post(

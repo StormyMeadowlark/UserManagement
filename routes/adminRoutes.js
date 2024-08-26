@@ -3,13 +3,13 @@ const router = express.Router();
 const adminController = require("../controllers/adminController");
 const settingsController = require("../controllers/settingsController");
 const authMiddleware = require("../middleware/authMiddleware");
-const tenantMiddleware = require("../middleware/tenantMiddleware"); // Assuming you have this
+ // Assuming you have this
 
 // Admin Dashboard - Tenant-specific
 router.get(
   "/dashboard",
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
-  tenantMiddleware, // Ensure tenant context is available
+ // Ensure tenant context is available
   adminController.getDashboardData
 ); // Get data for admin dashboard
 
@@ -17,14 +17,14 @@ router.get(
 router.get(
   "/settings",
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
-  tenantMiddleware, // Ensure tenant context is available
+ // Ensure tenant context is available
   settingsController.getSettings
 ); // Get all settings
 
 router.put(
   "/settings",
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
-  tenantMiddleware, // Ensure tenant context is available
+// Ensure tenant context is available
   settingsController.updateSettings
 ); // Update settings
 
