@@ -43,60 +43,42 @@ exports.verifyEmail = async (req, res) => {
   }
 };
 
-exports.loginUser = async (req, res) => {
+xports.loginUser = async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      logAction("Validation Error on Login", JSON.stringify(errors.array()));
-      return res.status(400).json({ errors: errors.array() });
+    const { username, password } = req.body;
+    const tenantId = req.headers["x-tenant-id"]; // Extract tenant ID from header
+
+    if (!tenantId) {
+      return res.status(400).json({ error: "Tenant ID is required" });
     }
 
-    const email = sanitize(req.body.email);
-    const password = sanitize(req.body.password);
+    // Find user by username and tenant
+    const user = await User.findOne({ username, tenant: tenantId });
 
-    const user = await User.findOne({ email }).populate("tenant");
-
-    if (!user || !user.emailVerified) {
-      logAction("Invalid Login Attempt", `Email: ${email}`);
-      return res
-        .status(400)
-        .json({ error: "Invalid credentials or email not verified" });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid username or password" });
     }
 
-    const isMatch = await comparePassword(password, user.password);
+    // Validate password
+    const isMatch = await user.comparePassword(password); // Ensure you have a comparePassword method
+
     if (!isMatch) {
-      logAction("Invalid Password Attempt", `Email: ${email}`);
-      return res.status(400).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: "Invalid username or password" });
     }
 
+    // Generate token (assuming JWT)
     const token = jwt.sign(
-      {
-        _id: user._id,
-        tenant: { id: user.tenant._id, name: user.tenant.name },
-      },
+      { userId: user._id, tenantId },
       process.env.JWT_SECRET,
-      { expiresIn: "30d" }
+      {
+        expiresIn: "1h",
+      }
     );
 
-    // Fetch the tenant's API key
-    const tenantApiKey = user.tenant.apiKey;
-
-    logAction("User Login", `User ${user.username} logged in.`);
-
-    // Include the tenant's API key in the response
-    res.status(200).json({
-      message: "Login successful",
-      data: {
-        token,
-        role: user.role,
-        apiKey: tenantApiKey, // Include the API key here
-      },
-    });
+    res.status(200).json({ token, message: "Login successful" });
   } catch (error) {
-    logAction("Error Logging In", error.message);
-    res
-      .status(500)
-      .json({ error: "Error logging in user", details: error.message });
+    console.error("Error logging in:", error.message);
+    res.status(500).json({ error: "Server error", details: error.message });
   }
 };
 
