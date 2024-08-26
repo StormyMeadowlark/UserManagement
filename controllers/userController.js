@@ -50,8 +50,8 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
 
     // Generate verification URL
-    const verificationUrl = `${req.protocol}://${req.get("host")}/api/v1/${
-      tenantObj._id
+    const verificationUrl = `${req.protocol}://${req.get("host")}/api/v1/users/${
+      tenant
     }/verify-email/${verificationToken}`;
 
     // Send verification email
