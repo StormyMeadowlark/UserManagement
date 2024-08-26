@@ -139,7 +139,7 @@ exports.registerUser = async (req, res) => {
     // Generate verification URL
     const verificationUrl = `${req.protocol}://${req.get(
       "host"
-    )}/api/users/:tenantId/verify-email/${verificationToken}`;
+    )}/api/users/${tenantObj._id}/verify-email/${verificationToken}`;
 
     // Send verification email
     await sendEmail(
