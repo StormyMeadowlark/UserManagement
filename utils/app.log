@@ -606,3 +606,6 @@
 2024-08-23T15:46:08.335Z - User Found: User Username found with role: Admin
 2024-08-23T15:46:08.335Z - Access Granted: User Username granted access
 2024-08-23T15:46:08.369Z - Users Retrieved: Tenant ID: 66c722e0c17e4a7ff29243a6, Users Count: 3
+2024-08-26T15:36:04.261Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmM4YTZiMzY4ZTUzMTc4ZjBkNjQwYjIiLCJ0ZW5hbnQiOnsiaWQiOiI2NmM3MjJlMGMxN2U0YTdmZjI5MjQzYTYiLCJuYW1lIjoiU2t5bmV0cml4In0sImlhdCI6MTcyNDQ0ODM3OSwiZXhwIjoxNzI3MDQwMzc5fQ.dNUZ0DJZhXAxCcmMts_79-Gpv9mOc0cSg8v0P4OW-J4
+2024-08-26T15:36:04.263Z - Token Decoding: Decoded token for user ID: 66c8a6b368e53178f0d640b2
+2024-08-26T15:36:04.296Z - User Not Found: No user found with ID: 66c8a6b368e53178f0d640b2
