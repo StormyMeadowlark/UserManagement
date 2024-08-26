@@ -15,31 +15,62 @@ const Tenant = require("../models/Tenant")
 const bcrypt = require("bcrypt")
 const ApiKey = require("../models/ApiKey");
 
-exports.verifyEmail = async (req, res) => {
+exports.registerUser = async (req, res) => {
   try {
-    const token = sanitize(req.params.token); // Sanitize token input
-    const user = await User.findOne({ verificationToken: token });
+    const { name, username, email, password, tenant, role } = req.body;
 
-    if (!user) {
-      logAction("Invalid Verification Token", `Token: ${token}`);
+    // Validate password strength
+    if (password.length < 6) {
       return res
         .status(400)
-        .json({ error: "Invalid or expired verification token." });
+        .json({ error: "Password must be at least 6 characters long" });
     }
 
-    user.emailVerified = true;
-    user.verificationToken = undefined; // Remove the token after verification
-    await user.save();
+    // Check if the tenant exists
+    const tenantObj = await Tenant.findOne({ name: tenant });
+    if (!tenantObj) {
+      return res.status(400).json({ error: "Invalid tenant name" });
+    }
 
-    logAction("Email Verified", `User ${user.username} verified their email.`);
-    res
-      .status(200)
-      .json({ message: "Email verified successfully", data: { user } });
+    // Generate a verification token
+    const verificationToken = crypto.randomBytes(20).toString("hex");
+
+    // Create a new user
+    const newUser = new User({
+      name,
+      username,
+      email,
+      role,
+      password, // Password will be hashed by schema pre-save hook
+      tenant: tenantObj._id,
+      verificationToken,
+    });
+
+    // Save the new user
+    await newUser.save();
+
+    // Generate verification URL
+    const verificationUrl = `${req.protocol}://${req.get("host")}/api/v1/${
+      tenantObj._id
+    }/verify-email/${verificationToken}`;
+
+    // Send verification email
+    await sendEmail(
+      newUser.email,
+      tenantObj.verifiedSenderEmail,
+      "Email Verification",
+      `Please verify your email by clicking on the following link:\n\n${verificationUrl}`,
+      tenantObj.sendGridApiKey
+    );
+
+    // Send success response
+    res.status(201).json({
+      message:
+        "User registered successfully. Please check your email to verify your account.",
+    });
   } catch (error) {
-    logAction("Error Verifying Email", error.message);
-    res
-      .status(500)
-      .json({ error: "Error verifying email", details: error.message });
+    console.error("Error registering user:", error.message);
+    res.status(500).json({ error: `Error registering user: ${error.message}` });
   }
 };
 
@@ -77,82 +108,50 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-
-
-exports.registerUser = async (req, res) => {
+exports.verifyEmail = async (req, res) => {
   try {
-    const { name, username, email, password, tenant, role } = req.body;
+    const token = sanitize(req.params.token); // Sanitize token input
+    const user = await User.findOne({ verificationToken: token });
 
-    // Validate password strength (example)
-    if (password.length < 6) {
+    if (!user) {
+      logAction("Invalid Verification Token", `Token: ${token}`);
       return res
         .status(400)
-        .json({ error: "Password must be at least 6 characters long" });
+        .json({ error: "Invalid or expired verification token." });
     }
 
-    // Check if the tenant exists
-    const tenantObj = await Tenant.findOne({ name: tenant });
-    if (!tenantObj) {
-      return res.status(400).json({ error: "Invalid tenant name" });
-    }
+    user.emailVerified = true;
+    user.verificationToken = undefined; // Remove the token after verification
+    await user.save();
 
-    // Generate a verification token
-    const verificationToken = crypto.randomBytes(20).toString("hex");
-
-    // Create a new user
-    const newUser = new User({
-      name,
-      username,
-      email,
-      role,
-      password, // Password will be hashed by schema pre-save hook
-      tenant: tenantObj._id,
-      verificationToken,
-    });
-
-    // Save the new user
-    await newUser.save();
-
-    // Generate verification URL
-    const verificationUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/api/users/${tenantObj._id}/verify-email/${verificationToken}`;
-
-    // Send verification email
-    await sendEmail(
-      newUser.email,
-      tenantObj.verifiedSenderEmail,
-      "Email Verification",
-      `Please verify your email by clicking on the following link:\n\n${verificationUrl}`,
-      tenantObj.sendGridApiKey
-    );
-
-    // Send success response
-    res.status(201).json({
-      message:
-        "User registered successfully. Please check your email to verify your account.",
-    });
+    logAction("Email Verified", `User ${user.username} verified their email.`);
+    res
+      .status(200)
+      .json({ message: "Email verified successfully", data: { user } });
   } catch (error) {
-    console.error("Error registering user:", error.message);
-    res.status(500).json({ error: `Error registering user: ${error.message}` });
+    logAction("Error Verifying Email", error.message);
+    res
+      .status(500)
+      .json({ error: "Error verifying email", details: error.message });
   }
 };
 
 exports.getUserProfile = async (req, res) => {
   try {
-    const user = req.user;
-    logAction(
-      "Profile Retrieved",
-      `User ${user.username} retrieved their profile.`
-    );
-    res
-      .status(200)
-      .json({ message: "User profile retrieved successfully", data: { user } });
+    const userId = req.user.userId;
+    const tenantId = req.user.tenantId;
+
+    // Find the user by ID and tenant
+    const user = await User.findOne({ _id: userId, tenant: tenantId });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ user });
   } catch (error) {
-    logAction("Error Fetching User Profile", error.message);
-    res
-      .status(500)
-      .json({ error: "Error fetching user profile", details: error.message });
+    console.error("Error fetching user profile:", error.message);
+    res.status(500).json({ error: "Server error", details: error.message });
   }
 };
 
@@ -163,9 +162,13 @@ exports.updateUserProfile = async (req, res) => {
       updates.password = await hashPassword(updates.password);
     }
 
-    const user = await User.findByIdAndUpdate(req.user._id, updates, {
+    const user = await User.findByIdAndUpdate(req.user.userId, updates, {
       new: true,
     }).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     logAction(
       "Profile Updated",
@@ -186,11 +189,8 @@ exports.deleteUser = async (req, res) => {
   try {
     const { tenantId, userId } = req.params;
 
-    // Validate tenantId and userId
     if (!tenantId || !userId) {
-      return res
-        .status(400)
-        .json({ error: "Tenant ID and User ID are required" });
+      return res.status(400).json({ error: "Tenant ID and User ID are required" });
     }
 
     // Verify if the tenant exists
@@ -203,17 +203,13 @@ exports.deleteUser = async (req, res) => {
     const result = await User.deleteOne({ _id: userId, tenant: tenantId });
 
     if (result.deletedCount === 0) {
-      return res
-        .status(404)
-        .json({ error: "User not found or already deleted" });
+      return res.status(404).json({ error: "User not found or already deleted" });
     }
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user:", error.message);
-    res
-      .status(500)
-      .json({ error: "Error deleting user", details: error.message });
+    res.status(500).json({ error: "Error deleting user", details: error.message });
   }
 };
 

@@ -611,3 +611,23 @@
 2024-08-26T15:36:04.296Z - User Not Found: No user found with ID: 66c8a6b368e53178f0d640b2
 2024-08-26T17:47:38.203Z - User Login: User repeat logged in.
 2024-08-26T18:18:47.712Z - User Login: User this is a repeat logged in.
+2024-08-26T20:37:05.022Z - Authorization Header Missing: No Authorization header or incorrect format
+2024-08-26T20:38:50.478Z - Email Verified: User this is a repeat verified their email.
+2024-08-26T20:39:19.071Z - Authorization Header Missing: No Authorization header or incorrect format
+2024-08-26T20:39:29.939Z - Authorization Header Missing: No Authorization header or incorrect format
+2024-08-26T20:53:53.999Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmNjZTc5Y2FhY2NiNTIwZWIyMDU1NGMiLCJ0ZW5hbnRJZCI6IjY2YzcyMmUwYzE3ZTRhN2ZmMjkyNDNhNiIsImlhdCI6MTcyNDcwNTQ0MywiZXhwIjoxNzI0NzA5MDQzfQ.gqPWdxXlAuZoDXEtyDbQptumckf3ultgSWK898nMNUY
+2024-08-26T20:53:54.001Z - Token Decoding: Decoded token for user ID: undefined
+2024-08-26T20:53:54.180Z - User Not Found: No user found with ID: undefined
+2024-08-26T20:53:58.412Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmNjZTc5Y2FhY2NiNTIwZWIyMDU1NGMiLCJ0ZW5hbnRJZCI6IjY2YzcyMmUwYzE3ZTRhN2ZmMjkyNDNhNiIsImlhdCI6MTcyNDcwNTQ0MywiZXhwIjoxNzI0NzA5MDQzfQ.gqPWdxXlAuZoDXEtyDbQptumckf3ultgSWK898nMNUY
+2024-08-26T20:53:58.415Z - Token Decoding: Decoded token for user ID: undefined
+2024-08-26T20:53:58.451Z - User Not Found: No user found with ID: undefined
+2024-08-26T20:54:04.412Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmNjZTc5Y2FhY2NiNTIwZWIyMDU1NGMiLCJ0ZW5hbnRJZCI6IjY2YzcyMmUwYzE3ZTRhN2ZmMjkyNDNhNiIsImlhdCI6MTcyNDcwNTQ0MywiZXhwIjoxNzI0NzA5MDQzfQ.gqPWdxXlAuZoDXEtyDbQptumckf3ultgSWK898nMNUY
+2024-08-26T20:54:04.414Z - Token Decoding: Decoded token for user ID: undefined
+2024-08-26T20:54:04.454Z - User Not Found: No user found with ID: undefined
+2024-08-26T20:54:59.212Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmNjZTc5Y2FhY2NiNTIwZWIyMDU1NGMiLCJ0ZW5hbnRJZCI6IjY2YzcyMmUwYzE3ZTRhN2ZmMjkyNDNhNiIsImlhdCI6MTcyNDcwNTQ0MywiZXhwIjoxNzI0NzA5MDQzfQ.gqPWdxXlAuZoDXEtyDbQptumckf3ultgSWK898nMNUY
+2024-08-26T20:54:59.215Z - Token Decoding: Decoded token for user ID: undefined
+2024-08-26T20:54:59.261Z - User Not Found: No user found with ID: undefined
+2024-08-26T20:55:12.608Z - Token Extraction: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmNjZTc5Y2FhY2NiNTIwZWIyMDU1NGMiLCJ0ZW5hbnRJZCI6IjY2YzcyMmUwYzE3ZTRhN2ZmMjkyNDNhNiIsImlhdCI6MTcyNDcwNTQ0MywiZXhwIjoxNzI0NzA5MDQzfQ.gqPWdxXlAuZoDXEtyDbQptumckf3ultgSWK898nMNUY
+2024-08-26T20:55:12.610Z - Token Decoding: Decoded token for user ID: undefined
+2024-08-26T20:55:12.647Z - User Not Found: No user found with ID: undefined
+2024-08-26T20:58:20.301Z - Profile Updated: User repeat updated their profile.

@@ -85,31 +85,44 @@ exports.verifyRole = (roles) => {
   };
 };
 
-exports.verifyUser = async (req, res, next) => {
+exports.verifyUser = (req, res, next) => {
   try {
-    const token = req.header("Authorization").replace("Bearer ", "");
-    console.log("Token:", token);
+    const authHeader = req.header("Authorization");
 
-    if (!token) {
-      return res.status(401).json({ error: "No token provided" });
+    if (!authHeader) {
+      return res
+        .status(401)
+        .json({ error: "Authorization header is missing." });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Decoded Token:", decoded);
-
-    const user = await User.findById(decoded._id);
-    console.log("User:", user);
-
-    if (!user) {
-      return res.status(401).json({ error: "User not found" });
+    if (!authHeader.startsWith("Bearer ")) {
+      return res
+        .status(401)
+        .json({ error: "Authorization header is malformed." });
     }
 
-    req.user = user;
-    next();
+    const token = authHeader.split(" ")[1];
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        if (err.name === "TokenExpiredError") {
+          console.log("Token expired:", err);
+          return res.status(401).json({ error: "Token expired." });
+        }
+        console.log("JWT verification error:", err);
+        return res.status(401).json({ error: "Invalid token." });
+      }
+
+      req.user = decoded; // Attach the decoded token payload to req.user
+      next();
+    });
   } catch (error) {
     console.error("Error in verifyUser middleware:", error.message);
     res
-      .status(401)
-      .json({ error: "Unauthorized access", details: error.message });
+      .status(500)
+      .json({
+        error: "Server error in verifyUser middleware",
+        details: error.message,
+      });
   }
 };
