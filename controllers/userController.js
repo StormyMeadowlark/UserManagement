@@ -440,7 +440,7 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-exports.logoutUser = async (req, res) => {
+exports.logoutUser = (req, res) => {
   try {
     const token = req.header("Authorization");
 
@@ -451,6 +451,7 @@ exports.logoutUser = async (req, res) => {
     const extractedToken = token.replace("Bearer ", "");
     console.log("Extracted Token in User Management Service:", extractedToken);
 
+    // Verify the token
     jwt.verify(extractedToken, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         console.error(
