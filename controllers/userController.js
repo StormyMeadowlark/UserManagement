@@ -207,18 +207,33 @@ exports.updateUserProfile = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const { id } = sanitize(req.params);
-    const user = await User.findByIdAndDelete(id);
+    const { tenantId, userId } = req.params;
 
-    if (!user) {
-      logAction("Delete Attempt for Non-existent User", `User ID: ${id}`);
-      return res.status(404).json({ error: "User not found" });
+    // Validate tenantId and userId
+    if (!tenantId || !userId) {
+      return res
+        .status(400)
+        .json({ error: "Tenant ID and User ID are required" });
     }
 
-    logAction("User Deleted", `Admin deleted user ${user.username}.`);
+    // Verify if the tenant exists
+    const tenant = await Tenant.findById(tenantId);
+    if (!tenant) {
+      return res.status(404).json({ error: "Tenant not found" });
+    }
+
+    // Delete the user
+    const result = await User.deleteOne({ _id: userId, tenant: tenantId });
+
+    if (result.deletedCount === 0) {
+      return res
+        .status(404)
+        .json({ error: "User not found or already deleted" });
+    }
+
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    logAction("Error Deleting User", error.message);
+    console.error("Error deleting user:", error.message);
     res
       .status(500)
       .json({ error: "Error deleting user", details: error.message });

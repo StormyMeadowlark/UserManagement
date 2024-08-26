@@ -49,12 +49,9 @@ router.put(
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   userController.updateUser
 );
-router.delete(
-  "/:tenantId/:id",
-  authMiddleware.verifyRole(["SuperAdmin"]),
-  userController.deleteUser
-);
+router.delete("/:tenantId/user/:userId", userController.deleteUser);
 
 router.post("/:tenantId/logout", userController.logoutUser)
+
 module.exports = router;
 
