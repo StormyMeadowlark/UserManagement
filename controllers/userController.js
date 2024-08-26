@@ -43,7 +43,7 @@ exports.verifyEmail = async (req, res) => {
   }
 };
 
-xports.loginUser = async (req, res) => {
+exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
     const tenantId = req.headers["x-tenant-id"]; // Extract tenant ID from header
