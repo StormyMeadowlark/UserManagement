@@ -55,5 +55,6 @@ router.delete(
   userController.deleteUser
 );
 
+router.post("/:tenantId/logout", userController.logoutUser)
 module.exports = router;
 
