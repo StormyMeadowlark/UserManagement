@@ -442,40 +442,43 @@ exports.resetPassword = async (req, res) => {
 
 exports.logoutUser = (req, res) => {
   try {
-    const token = req.header("Authorization");
+    // Log the entire request headers for debugging
+    console.log("Request Headers:", req.headers);
 
+    // Extract the Authorization header
+    const token = req.header("Authorization");
+    console.log("Authorization Header:", token);
+
+    // Check if the token is present
     if (!token) {
+      console.error("No token provided");
       return res.status(401).json({ error: "No token provided" });
     }
 
+    // Extract the token from the "Bearer " prefix
     const extractedToken = token.replace("Bearer ", "");
-    console.log("Extracted Token in User Management Service:", extractedToken);
+    console.log("Extracted Token:", extractedToken);
 
     // Verify the token
     jwt.verify(extractedToken, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        console.error(
-          "JWT Verification Error in User Management Service:",
-          err.message
-        );
+        console.error("JWT Verification Error:", err.message);
         return res
           .status(401)
           .json({ error: "Invalid token", details: err.message });
       }
 
-      console.log(
-        "Verified Decoded Token in User Management Service:",
-        decoded
-      );
+      console.log("Verified Decoded Token:", decoded);
       res.status(200).json({ message: "User logged out successfully" });
     });
   } catch (error) {
-    console.error("Error logging out:", error);
+    console.error("Error logging out:", error.message);
     return res
       .status(500)
       .json({ error: "Server error", details: error.message });
   }
 };
+
 
 
 exports.getRoles = (req, res) => {
