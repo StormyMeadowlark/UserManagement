@@ -46,33 +46,28 @@ exports.verifyEmail = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const tenantId = req.headers["x-tenant-id"]; // Extract tenant ID from header
+    const tenantId = req.headers["x-tenant-id"];
 
     if (!tenantId) {
       return res.status(400).json({ error: "Tenant ID is required" });
     }
 
-    // Find user by username and tenant
     const user = await User.findOne({ username, tenant: tenantId });
 
     if (!user) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
-    // Validate password
-    const isMatch = await user.comparePassword(password); // Ensure you have a comparePassword method
+    const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
-    // Generate token (assuming JWT)
     const token = jwt.sign(
       { userId: user._id, tenantId },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
+      { expiresIn: "1h" }
     );
 
     res.status(200).json({ token, message: "Login successful" });
