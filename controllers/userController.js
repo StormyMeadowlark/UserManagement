@@ -133,7 +133,7 @@ exports.verifyEmail = async (req, res) => {
       logAction("Invalid Verification Token", `Token: ${token}`);
       return res
         .status(400)
-        .json({ error: "Invalid or expired verification token." });
+        .send("<h1>Invalid or expired verification token.</h1>");
     }
 
     user.emailVerified = true;
@@ -142,15 +142,13 @@ exports.verifyEmail = async (req, res) => {
 
     logAction("Email Verified", `User ${user.username} verified their email.`);
 
-    // Redirect to the frontend "verified" page
-    const tenant = await Tenant.findById(tenantId);
-    const frontendBaseUrl = `${tenant.domain}`;
-    res.redirect(`${frontendBaseUrl}/verified`);
+    // Return a simple HTML message
+    res.status(200).send("<h1>User has been verified successfully!</h1>");
   } catch (error) {
     logAction("Error Verifying Email", error.message);
     res
       .status(500)
-      .json({ error: "Error verifying email", details: error.message });
+      .send("<h1>Error verifying email. Please try again later.</h1>");
   }
 };
 
