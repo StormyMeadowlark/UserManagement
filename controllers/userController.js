@@ -126,6 +126,10 @@ exports.verifyEmail = async (req, res) => {
     const token = req.params.token;
     const tenantId = req.params.tenantId;
 
+    console.log("Received Token:", token); // Log the token
+    console.log("Received Tenant ID:", tenantId); // Log the tenant ID
+    console.log("X-Tenant-Id Header:", req.headers["x-tenant-id"]); // Log the tenant ID header
+
     // Ensure the tenant ID in the header matches the one in the URL
     if (req.headers["x-tenant-id"] !== tenantId) {
       return res.status(400).json({ error: "Invalid tenant ID." });
@@ -148,6 +152,7 @@ exports.verifyEmail = async (req, res) => {
 
     res.status(200).json({ message: "Email verified successfully!" });
   } catch (error) {
+    console.error("Error verifying email:", error.message);
     res
       .status(500)
       .json({ error: "Error verifying email", details: error.message });
