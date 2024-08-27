@@ -61,7 +61,7 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
 
     // Generate frontend verification URL
-    const frontendBaseUrl = "https://stormymeadowlark.com"; // Your frontend URL
+    const frontendBaseUrl = `${tenantObj.domain}`; // Your frontend URL
     const verificationUrl = `${frontendBaseUrl}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
 
     // Send verification email
