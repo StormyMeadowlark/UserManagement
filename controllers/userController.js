@@ -63,7 +63,8 @@ exports.registerUser = async (req, res) => {
     // Generate frontend verification URL
     const frontendBaseUrl = `https://stormymeadowlark.com`; // Your frontend URL
     // Update the verification URL generation
-    const verificationUrl = `${frontendBaseUrl}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
+   const verificationUrl = `${tenantObj.domain}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
+
 
     // Send verification email
     await sendEmail(
@@ -122,12 +123,8 @@ exports.loginUser = async (req, res) => {
 
 exports.verifyEmail = async (req, res) => {
   try {
-    const token = sanitize(req.params.token);
-    const tenantId = sanitize(req.params.tenantId);
-
-    console.log("Verification process started");
-    console.log("Token:", token);
-    console.log("Tenant ID:", tenantId);
+    const token = req.params.token;
+    const tenantId = req.params.tenantId;
 
     const user = await User.findOne({
       verificationToken: token,
@@ -135,29 +132,22 @@ exports.verifyEmail = async (req, res) => {
     });
 
     if (!user) {
-      logAction("Invalid Verification Token", `Token: ${token}`);
       return res
         .status(400)
-        .send("<h1>Invalid or expired verification token.</h1>");
+        .json({ error: "Invalid or expired verification token." });
     }
 
     user.emailVerified = true;
     user.verificationToken = undefined;
     await user.save();
 
-    logAction("Email Verified", `User ${user.username} verified their email.`);
-    console.log("User verified:", user.username);
-
-    res.status(200).send("<h1>User has been verified successfully!</h1>");
+    res.status(200).json({ message: "Email verified successfully!" });
   } catch (error) {
-    logAction("Error Verifying Email", error.message);
-    console.error("Verification error:", error.message);
     res
       .status(500)
-      .send("<h1>Error verifying email. Please try again later.</h1>");
+      .json({ error: "Error verifying email", details: error.message });
   }
 };
-
 
 exports.getUserProfile = async (req, res) => {
   try {
