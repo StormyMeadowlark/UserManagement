@@ -122,7 +122,12 @@ exports.loginUser = async (req, res) => {
 exports.verifyEmail = async (req, res) => {
   try {
     const token = sanitize(req.params.token); // Sanitize token input
-    const user = await User.findOne({ verificationToken: token });
+    const tenantId = sanitize(req.params.tenantId);
+
+    const user = await User.findOne({
+      verificationToken: token,
+      tenant: tenantId,
+    });
 
     if (!user) {
       logAction("Invalid Verification Token", `Token: ${token}`);
@@ -136,9 +141,11 @@ exports.verifyEmail = async (req, res) => {
     await user.save();
 
     logAction("Email Verified", `User ${user.username} verified their email.`);
-    res
-      .status(200)
-      .json({ message: "Email verified successfully", data: { user } });
+
+    // Redirect to the frontend "verified" page
+    const tenant = await Tenant.findById(tenantId);
+    const frontendBaseUrl = `${tenant.domain}`;
+    res.redirect(`${frontendBaseUrl}/verified`);
   } catch (error) {
     logAction("Error Verifying Email", error.message);
     res
