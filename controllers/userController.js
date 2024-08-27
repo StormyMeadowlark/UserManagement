@@ -62,7 +62,7 @@ exports.registerUser = async (req, res) => {
 
     // Generate frontend verification URL
     const frontendBaseUrl = `https://skynetrix.tech/api/v1`; // Your frontend URL
-    const verificationUrl = `${frontendBaseUrl}/${tenantObj._id}/${verificationToken}`;
+    const verificationUrl = `${frontendBaseUrl}/users/${tenantObj._id}/verify-email/${verificationToken}`;
 
     // Send verification email
     await sendEmail(
@@ -121,8 +121,12 @@ exports.loginUser = async (req, res) => {
 
 exports.verifyEmail = async (req, res) => {
   try {
-    const token = sanitize(req.params.token); // Sanitize token input
+    const token = sanitize(req.params.token);
     const tenantId = sanitize(req.params.tenantId);
+
+    console.log("Verification process started");
+    console.log("Token:", token);
+    console.log("Tenant ID:", tenantId);
 
     const user = await User.findOne({
       verificationToken: token,
@@ -137,15 +141,16 @@ exports.verifyEmail = async (req, res) => {
     }
 
     user.emailVerified = true;
-    user.verificationToken = undefined; // Remove the token after verification
+    user.verificationToken = undefined;
     await user.save();
 
     logAction("Email Verified", `User ${user.username} verified their email.`);
+    console.log("User verified:", user.username);
 
-    // Return a simple HTML message
     res.status(200).send("<h1>User has been verified successfully!</h1>");
   } catch (error) {
     logAction("Error Verifying Email", error.message);
+    console.error("Verification error:", error.message);
     res
       .status(500)
       .send("<h1>Error verifying email. Please try again later.</h1>");
