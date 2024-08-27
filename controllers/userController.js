@@ -60,8 +60,8 @@ exports.registerUser = async (req, res) => {
     // Save the new user
     await newUser.save();
 
-    // Generate frontend verification URL
-    const frontendBaseUrl = `https://stormymeadowlark.com`; // Your frontend URL
+
+
     // Update the verification URL generation
    const verificationUrl = `${tenantObj.domain}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
 
@@ -126,6 +126,11 @@ exports.verifyEmail = async (req, res) => {
     const token = req.params.token;
     const tenantId = req.params.tenantId;
 
+    // Ensure the tenant ID in the header matches the one in the URL
+    if (req.headers["x-tenant-id"] !== tenantId) {
+      return res.status(400).json({ error: "Invalid tenant ID." });
+    }
+
     const user = await User.findOne({
       verificationToken: token,
       tenant: tenantId,
@@ -148,6 +153,7 @@ exports.verifyEmail = async (req, res) => {
       .json({ error: "Error verifying email", details: error.message });
   }
 };
+
 
 exports.getUserProfile = async (req, res) => {
   try {
