@@ -32,6 +32,17 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ error: "Invalid tenant name" });
     }
 
+    // Check if the email or username is already taken within the tenant
+    const existingUser = await User.findOne({
+      $or: [{ email }, { username }],
+      tenant: tenantObj._id,
+    });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ error: "Email or Username already exists" });
+    }
+
     // Generate a verification token
     const verificationToken = crypto.randomBytes(20).toString("hex");
 
@@ -41,7 +52,7 @@ exports.registerUser = async (req, res) => {
       username,
       email,
       role,
-      password, // Password will be hashed by schema pre-save hook
+      password,// Hash the password before saving
       tenant: tenantObj._id,
       verificationToken,
     });
@@ -50,7 +61,7 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
 
     // Generate verification URL
-    const verificationUrl = `${req.protocol}://${req.get("host")}/api/v1/users/${
+    const verificationUrl = `${req.protocol}://${req.get("host")}/api/${
       tenantObj._id
     }/verify-email/${verificationToken}`;
 
@@ -73,6 +84,7 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ error: `Error registering user: ${error.message}` });
   }
 };
+
 
 exports.loginUser = async (req, res) => {
   try {
@@ -98,7 +110,7 @@ exports.loginUser = async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, tenantId },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "30d" }
     );
 
     res.status(200).json({ token, message: "Login successful" });
@@ -136,12 +148,12 @@ exports.verifyEmail = async (req, res) => {
   }
 };
 
+
 exports.getUserProfile = async (req, res) => {
   try {
-    const userId = req.user.userId;
+    const userId = req.user.userId; // This should be populated by the authMiddleware
     const tenantId = req.user.tenantId;
 
-    // Find the user by ID and tenant
     const user = await User.findOne({ _id: userId, tenant: tenantId });
 
     if (!user) {
