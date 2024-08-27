@@ -61,8 +61,9 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
 
     // Generate frontend verification URL
-    const frontendBaseUrl = `https://skynetrix.tech/api/v1`; // Your frontend URL
-    const verificationUrl = `${frontendBaseUrl}/users/${tenantObj._id}/verify-email/${verificationToken}`;
+    const frontendBaseUrl = `https://stormymeadowlark.com`; // Your frontend URL
+    // Update the verification URL generation
+    const verificationUrl = `${frontendBaseUrl}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
 
     // Send verification email
     await sendEmail(
