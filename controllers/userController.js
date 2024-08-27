@@ -52,7 +52,7 @@ exports.registerUser = async (req, res) => {
       username,
       email,
       role,
-      password,// Hash the password before saving
+      password, // Hash the password before saving
       tenant: tenantObj._id,
       verificationToken,
     });
@@ -60,10 +60,9 @@ exports.registerUser = async (req, res) => {
     // Save the new user
     await newUser.save();
 
-    // Generate verification URL
-    const verificationUrl = `${req.protocol}://${req.get("host")}/api/users/${
-      tenantObj._id
-    }/verify-email/${verificationToken}`;
+    // Generate frontend verification URL
+    const frontendBaseUrl = "https://stormymeadowlark.com"; // Your frontend URL
+    const verificationUrl = `${frontendBaseUrl}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
 
     // Send verification email
     await sendEmail(
