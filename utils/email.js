@@ -6,16 +6,7 @@ const sendEmail = async (to, from, subject, text, apikey) => {
     // Log the encrypted API key for debugging
     //console.log("Encrypted API Key:", apikey);
 
-    // Decrypt the tenant's SendGrid API key
-    const decryptedApiKey = decrypt(apikey);
-
-    // Log the decrypted API key for debugging
-    //console.log("Decrypted API Key:", decryptedApiKey);
-
-    // Validate the decrypted API key
-    if (!decryptedApiKey) {
-      throw new Error("Decryption failed, API key is undefined or invalid.");
-    }
+   
 
     // Create a transporter using the tenant's decrypted SendGrid API key
     const transporter = nodemailer.createTransport({
@@ -24,7 +15,7 @@ const sendEmail = async (to, from, subject, text, apikey) => {
       secure: false,
       auth: {
         user: "apikey", // This is the literal string 'apikey'
-        pass: decryptedApiKey, // Tenant-specific decrypted SendGrid API key
+        pass: apikey, // Tenant-specific decrypted SendGrid API key
       },
     });
 

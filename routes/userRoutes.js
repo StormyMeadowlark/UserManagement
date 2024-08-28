@@ -31,7 +31,7 @@ router.post(
 
 // Password reset routes
 router.post("/:tenantId/forgot-password", userController.forgotPassword);
-router.post("/:tenantId/reset-password", userController.resetPassword);
+router.post("/:tenantId/reset-password/:token", userController.resetPassword);
 
 // Admin/SuperAdmin routes
 router.get(

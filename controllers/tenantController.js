@@ -1,54 +1,69 @@
-const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const { validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const Tenant = require("../models/Tenant");
-const { logAction } = require("../utils/logger");
-const { encrypt } = require("../config/config");
+const User = require("../models/User");
 
 exports.createTenant = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    logAction("Validation Error", JSON.stringify(errors.array()));
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
-    const { name, contactEmail, sendGridApiKey, verifiedSenderEmail, domain } =
+    const { name, contactEmail, domain, sendGridApiKey, verifiedSenderEmail } =
       req.body;
 
-    // Generate a unique API key for the tenant
-    const apiKey = crypto.randomBytes(32).toString("hex");
-
-    // Hash the API key before storing
-    const salt = await bcrypt.genSalt(10);
-    const hashedApiKey = await bcrypt.hash(apiKey, salt);
-
-    // Encrypt the SendGrid API key before storing
-    const encryptedSendGridApiKey = encrypt(sendGridApiKey);
-
-    // Create and save the new tenant
-    const tenant = new Tenant({
+    // Create a new tenant
+    const newTenant = new Tenant({
       name,
       contactEmail,
       domain,
-      sendGridApiKey: encryptedSendGridApiKey,
+      sendGridApiKey,
       verifiedSenderEmail,
-      apiKey: hashedApiKey, // Store the hashed API key in the Tenant model
+      apiKey: generateApiKey(), // Generate API key securely
     });
 
-    await tenant.save();
+    await newTenant.save();
 
-    logAction("Tenant Created", `Tenant ID: ${tenant._id}`);
-    res.status(201).json({ tenant, apiKey }); // Return the plain API key to the client
+    // Generate a random password
+    const randomPassword = crypto.randomBytes(8).toString("hex"); // 8 bytes = 16 characters
+
+    // Automatically create a SuperAdmin user for this tenant
+    const superAdminUser = new User({
+      username: `${contactEmail.split("@")[0]}`, // Use the email prefix as username
+      email: contactEmail,
+      password,
+      role: "SuperAdmin", // Assign the SuperAdmin role
+      tenant: newTenant._id, // Correctly associate the ObjectId of the tenant
+    });
+
+    await superAdminUser.save();
+
+    // Generate JWT token for SuperAdmin
+    const token = jwt.sign(
+      {
+        userId: superAdminUser._id,
+        tenantId: newTenant._id,
+        role: "SuperAdmin",
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    // Return the token, tenant, user, and plain-text password in the response
+    res.status(201).json({
+      token,
+      tenant: newTenant,
+      user: superAdminUser,
+      password: randomPassword, // Include the plain-text password in the response
+    });
   } catch (error) {
-    logAction("Error Creating Tenant", error.message);
-    if (error.code === 11000) {
-      return res.status(400).json({
-        error: "Duplicate entry. Please ensure all fields are unique.",
-      });
-    }
-    res.status(500).json({ error: "Server error" });
+    console.error("Error during tenant creation:", error.message);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// Function to generate a unique API key (example)
+function generateApiKey() {
+  return crypto.randomBytes(32).toString("hex");
+}
 
 // Get all tenants
 exports.getAllTenants = async (req, res) => {

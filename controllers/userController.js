@@ -52,7 +52,7 @@ exports.registerUser = async (req, res) => {
       username,
       email,
       role,
-      password, // Hash the password before saving
+      password,
       tenant: tenantObj._id,
       verificationToken,
     });
@@ -60,25 +60,22 @@ exports.registerUser = async (req, res) => {
     // Save the new user
     await newUser.save();
 
-
-
-    // Update the verification URL generation
-   const verificationUrl = `${tenantObj.domain}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
-
+    // Construct verification URL to include tenant ID in query params
+    //const verificationUrl = `${req.protocol}://${tenantObj.domain}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
 
     // Send verification email
-    await sendEmail(
-      newUser.email,
-      tenantObj.verifiedSenderEmail,
-      "Email Verification",
-      `Please verify your email by clicking on the following link:\n\n${verificationUrl}`,
-      tenantObj.sendGridApiKey
-    );
+    //await sendEmail(
+    //  newUser.email,
+    //  tenantObj.verifiedSenderEmail,
+    //  "Email Verification",
+    //  `Please verify your email by clicking on the following link:\n\n${verificationUrl}`,
+     // tenantObj.sendGridApiKey
+   // );
 
     // Send success response
     res.status(201).json({
       message:
-        "User registered successfully. Please check your email to verify your account.",
+        "User registered successfully. ", //Please check your email to verify your account.",
     });
   } catch (error) {
     console.error("Error registering user:", error.message);
@@ -114,7 +111,19 @@ exports.loginUser = async (req, res) => {
       { expiresIn: "30d" }
     );
 
-    res.status(200).json({ token, message: "Login successful" });
+    if (!user.emailVerified) {
+      return res.status(200).json({
+        token,
+        message: "Login successful,", // but your email is not verified.",
+        emailVerified: false
+      });
+    }
+
+    res.status(200).json({
+      token,
+      message: "Login successful",
+      emailVerified: true
+    });
   } catch (error) {
     console.error("Error logging in:", error.message);
     res.status(500).json({ error: "Server error", details: error.message });
@@ -130,25 +139,38 @@ exports.verifyEmail = async (req, res) => {
     console.log("Received Tenant ID:", tenantId); // Log the tenant ID
     console.log("X-Tenant-Id Header:", req.headers["x-tenant-id"]); // Log the tenant ID header
 
+    // Check if x-tenant-id header is missing
+    if (!req.headers["x-tenant-id"]) {
+      console.error("Missing x-tenant-id header.");
+      return res.status(400).json({ error: "Missing x-tenant-id header." });
+    }
+
     // Ensure the tenant ID in the header matches the one in the URL
     if (req.headers["x-tenant-id"] !== tenantId) {
+      console.error("Mismatch between tenant ID in URL and header.");
       return res.status(400).json({ error: "Invalid tenant ID." });
     }
 
+    // Find user by verification token and tenant ID
     const user = await User.findOne({
       verificationToken: token,
       tenant: tenantId,
     });
 
+    // Handle case where user is not found or token is expired
     if (!user) {
+      console.error("User not found or verification token expired.");
       return res
         .status(400)
         .json({ error: "Invalid or expired verification token." });
     }
 
+    // Update user to mark email as verified
     user.emailVerified = true;
-    user.verificationToken = undefined;
+    user.verificationToken = undefined; // Remove the token after successful verification
     await user.save();
+
+    console.log("Email verified successfully for user:", user._id);
 
     res.status(200).json({ message: "Email verified successfully!" });
   } catch (error) {
@@ -162,21 +184,42 @@ exports.verifyEmail = async (req, res) => {
 
 exports.getUserProfile = async (req, res) => {
   try {
-    const userId = req.user.userId; // This should be populated by the authMiddleware
+    const userId = req.user.userId; // Extracted from authMiddleware
     const tenantId = req.user.tenantId;
 
+    console.log(
+      "Fetching user profile for User ID:",
+      userId,
+      "and Tenant ID:",
+      tenantId
+    );
+
+    // Fetch the user by ID and tenant
     const user = await User.findOne({ _id: userId, tenant: tenantId });
 
     if (!user) {
+      console.log(
+        "User not found with User ID:",
+        userId,
+        "and Tenant ID:",
+        tenantId
+      );
       return res.status(404).json({ error: "User not found" });
     }
+
+    console.log("Fetched user profile successfully:", user);
 
     res.status(200).json({ user });
   } catch (error) {
     console.error("Error fetching user profile:", error.message);
+
+    // Log the stack trace for detailed error information
+    console.error("Stack trace:", error.stack);
+
     res.status(500).json({ error: "Server error", details: error.message });
   }
 };
+
 
 exports.updateUserProfile = async (req, res) => {
   try {
@@ -236,36 +279,179 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.generateApiKeyForUser = async (req, res) => {
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const { tenantId } = req.params; // Extract tenantId from the URL
+
+  console.log("Received password reset request for email:", email);
+  console.log("Tenant ID extracted from URL:", tenantId);
+
   try {
-    const { userId } = sanitize(req.params);
-    const user = await User.findById(userId);
+    // Find the user by email and tenantId
+    const user = await User.findOne({ email, tenant: tenantId }).populate(
+      "tenant"
+    );
+
     if (!user) {
-      logAction(
-        "API Key Generation Attempt for Non-existent User",
-        `User ID: ${userId}`
+      console.log(
+        "User not found with email:",
+        email,
+        "and tenant ID:",
+        tenantId
       );
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "User not found." });
     }
 
-    const { key } = await generateApiKey(user._id);
-    logAction(
-      "API Key Generated",
-      `API key generated for user ${user.username}.`
+    console.log("Found user for password reset:", user);
+
+    // Generate a reset token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    console.log("Generated reset token:", resetToken);
+
+    // Hash the reset token and set the expiration time (e.g., 1 hour)
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+    console.log("Hashed reset token:", hashedToken);
+
+    user.resetPasswordToken = hashedToken;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
+
+    // Save the updated user to the database
+    await user.save();
+    console.log("User updated with reset token and expiry.");
+
+    // Create a reset URL to send to the user's email
+    const resetUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/api/users/${tenantId}/reset-password/${resetToken}`;
+    console.log("Generated reset URL:", resetUrl);
+
+    // Email subject and message
+    const subject = "Password Reset Request";
+    const message = `You requested a password reset. Click the following link to reset your password: ${resetUrl} \n\nIf you did not request this, please ignore this email.`;
+
+    // Log email details before sending
+    console.log("Preparing to send email with the following details:");
+    console.log("To:", user.email);
+    console.log("From:", user.tenant.verifiedSenderEmail);
+    console.log("Subject:", subject);
+    console.log("Message:", message);
+
+    // Send the email
+    await sendEmail(
+      user.email,
+      user.tenant.verifiedSenderEmail,
+      subject,
+      message,
+      user.tenant.sendGridApiKey
     );
+
+    console.log("Password reset email sent successfully.");
     res
-      .status(201)
-      .json({
-        message: "API key generated successfully",
-        data: { apiKey: key },
-      });
+      .status(200)
+      .json({ message: "Password reset email sent successfully." });
   } catch (error) {
-    logAction("Error Generating API Key", error.message);
-    res
-      .status(500)
-      .json({ error: "Error generating API key", details: error.message });
+    console.error("Error during forgot password:", error.message);
+
+    // Additional error details if available
+    if (error.response) {
+      console.error("Error response details:", error.response.body);
+    }
+
+    res.status(500).json({ error: "Server error." });
   }
 };
+
+// Reset Password - Verify Token and Set New Password
+exports.resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+  console.log("Received password reset with token:", token);
+
+  try {
+    // Hash the provided token to find a matching user in the database
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+    console.log("Hashed token for lookup:", hashedToken);
+
+    // Find the user with the matching reset token and ensure the token has not expired
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: Date.now() }, // Token expiration check
+    });
+
+    if (!user) {
+      console.log("Invalid or expired token for reset:", token);
+      return res.status(400).json({ error: "Invalid or expired token." });
+    }
+
+    // Hash the new password and save it to the user's account
+    user.password = password; // Fixing the missing hash
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    // Save the updated user to the database
+    await user.save();
+    console.log("Password has been reset successfully for user:", user.email);
+
+    res.status(200).json({ message: "Password has been reset successfully." });
+  } catch (error) {
+    console.error("Error during password reset:", error.message);
+    res.status(500).json({ error: "Server error." });
+  }
+};
+
+exports.logoutUser = (req, res) => {
+  try {
+    // Log the entire request headers for debugging
+    console.log("Request Headers:", req.headers);
+
+    // Extract the Authorization header
+    const token = req.header("Authorization");
+    console.log("Authorization Header:", token);
+
+    // Check if the token is present
+    if (!token) {
+      console.error("No token provided");
+      return res.status(401).json({ error: "No token provided" });
+    }
+
+    // Extract the token from the "Bearer " prefix
+    const extractedToken = token.replace("Bearer ", "");
+    console.log("Extracted Token:", extractedToken);
+
+    // Verify the token
+    jwt.verify(extractedToken, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        console.error("JWT Verification Error:", err.message);
+        return res
+          .status(401)
+          .json({ error: "Invalid token", details: err.message });
+      }
+
+      console.log("Verified Decoded Token:", decoded);
+      res.status(200).json({ message: "User logged out successfully" });
+    });
+  } catch (error) {
+    console.error("Error logging out:", error.message);
+    return res
+      .status(500)
+      .json({ error: "Server error", details: error.message });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
 exports.changePassword = async (req, res) => {
   try {
@@ -384,111 +570,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-exports.forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email }).populate("tenant");
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    const resetToken = crypto.randomBytes(20).toString("hex");
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-    await user.save();
-
-    const resetUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/api/users/reset-password/${resetToken}`;
-
-    // Send password reset email
-    await sendEmail(
-      user.email,
-      user.tenant.verifiedSenderEmail, // Ensure you have this field in the tenant model
-      "Password Reset Request",
-      `Please click the following link to reset your password:\n\n${resetUrl}`,
-      user.tenant.sendGridApiKey // Use the tenant-specific SendGrid API key
-    );
-
-    res
-      .status(200)
-      .json({ message: "Password reset email sent successfully." });
-  } catch (error) {
-    console.error("Error requesting password reset:", error.message);
-    res
-      .status(500)
-      .json({ error: `Error requesting password reset: ${error.message}` });
-  }
-};
-
-
-exports.resetPassword = async (req, res) => {
-  try {
-    const { resetToken, newPassword } = sanitize(req.body);
-    const user = await User.findOne({
-      resetPasswordToken: resetToken,
-      resetPasswordExpires: { $gt: Date.now() },
-    });
-
-    if (!user) {
-      logAction("Invalid Password Reset Token", `Token: ${resetToken}`);
-      return res.status(400).json({ error: "Invalid or expired token" });
-    }
-
-    user.password = await hashPassword(sanitize(newPassword));
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    await user.save();
-
-    logAction("Password Reset", `User ${user.username} reset their password.`);
-    res.status(200).json({ message: "Password reset successfully" });
-  } catch (error) {
-    logAction("Error Resetting Password", error.message);
-    res
-      .status(500)
-      .json({ error: "Error resetting password", details: error.message });
-  }
-};
-
-exports.logoutUser = (req, res) => {
-  try {
-    // Log the entire request headers for debugging
-    console.log("Request Headers:", req.headers);
-
-    // Extract the Authorization header
-    const token = req.header("Authorization");
-    console.log("Authorization Header:", token);
-
-    // Check if the token is present
-    if (!token) {
-      console.error("No token provided");
-      return res.status(401).json({ error: "No token provided" });
-    }
-
-    // Extract the token from the "Bearer " prefix
-    const extractedToken = token.replace("Bearer ", "");
-    console.log("Extracted Token:", extractedToken);
-
-    // Verify the token
-    jwt.verify(extractedToken, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        console.error("JWT Verification Error:", err.message);
-        return res
-          .status(401)
-          .json({ error: "Invalid token", details: err.message });
-      }
-
-      console.log("Verified Decoded Token:", decoded);
-      res.status(200).json({ message: "User logged out successfully" });
-    });
-  } catch (error) {
-    console.error("Error logging out:", error.message);
-    return res
-      .status(500)
-      .json({ error: "Server error", details: error.message });
-  }
-};
 
 
 
@@ -719,6 +801,9 @@ exports.updateUserTenant = async (req, res) => {
       .json({ error: "Error updating user tenant", details: error.message });
   }
 };
+
+
+
 exports.uploadProfilePicture = (req, res) => {
   const file = req.file;
 
@@ -767,4 +852,32 @@ exports.uploadProfilePicture = (req, res) => {
         });
     }
   });
+};
+exports.generateApiKeyForUser = async (req, res) => {
+  try {
+    const { userId } = sanitize(req.params);
+    const user = await User.findById(userId);
+    if (!user) {
+      logAction(
+        "API Key Generation Attempt for Non-existent User",
+        `User ID: ${userId}`
+      );
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const { key } = await generateApiKey(user._id);
+    logAction(
+      "API Key Generated",
+      `API key generated for user ${user.username}.`
+    );
+    res.status(201).json({
+      message: "API key generated successfully",
+      data: { apiKey: key },
+    });
+  } catch (error) {
+    logAction("Error Generating API Key", error.message);
+    res
+      .status(500)
+      .json({ error: "Error generating API key", details: error.message });
+  }
 };
