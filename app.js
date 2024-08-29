@@ -11,24 +11,26 @@ const app = express();
 
 // Middleware
 app.use(express.json()); // Parse JSON request bodies
+
+// Corrected CORS configuration
 app.use(
   cors({
     origin: [
-      "https://hemautomotive.com/*",
-      "http://localhost:3000/*",
-      "https://stormymeadowlark.com/*",
-      "http://127.0.0.1:5173/*",
-    ], // Replace with your frontend domain
+      "https://hemautomotive.com",
+      "http://localhost:3000",
+      "https://stormymeadowlark.com",
+      "http://127.0.0.1:5173",
+    ], // Correctly list allowed origins without wildcards
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "x-tenant-id", "Authorization"], // Ensure 'x-tenant-id' is included
+    allowedHeaders: ["Content-Type", "x-tenant-id", "Authorization"], // Include necessary headers
+    credentials: true, // Optional: Enable this if you need to send credentials
   })
-); // Enable CORS for all requests
+);
 
 // MongoDB connection
 console.log("Attempting to connect to MongoDB...");
 mongoose
-  .connect(process.env.MONGO_URI, {
-  })
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
@@ -37,17 +39,14 @@ const tenantRoutes = require("./routes/tenantRoutes");
 const userRoutes = require("./routes/userRoutes");
 const apiKeyRoutes = require("./routes/apiKeyRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-const mediaRoutes = require("./routes/mediaRoutes")
+const mediaRoutes = require("./routes/mediaRoutes");
 
 // Routes
-app.use("/api/tenants", tenantRoutes)
+app.use("/api/tenants", tenantRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/keys", apiKeyRoutes);
-app.use("/api/media",mediaRoutes);
-
-
- // User management routes
+app.use("/api/media", mediaRoutes);
 
 // Basic route
 app.get("/", (req, res) => {
