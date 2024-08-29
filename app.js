@@ -17,6 +17,7 @@ app.use(
       "https://hemautomotive.com",
       "http://localhost:3000",
       "https://stormymeadowlark.com",
+      "http://127.0.0.1:5173/",
     ], // Replace with your frontend domain
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "x-tenant-id", "Authorization"], // Ensure 'x-tenant-id' is included
