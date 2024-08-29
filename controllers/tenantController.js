@@ -29,7 +29,7 @@ exports.createTenant = async (req, res) => {
     const superAdminUser = new User({
       username: `${contactEmail.split("@")[0]}`, // Use the email prefix as username
       email: contactEmail,
-      password,
+      password: randomPassword,
       role: "SuperAdmin", // Assign the SuperAdmin role
       tenant: newTenant._id, // Correctly associate the ObjectId of the tenant
     });
