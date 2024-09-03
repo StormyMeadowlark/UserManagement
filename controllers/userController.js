@@ -87,42 +87,46 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const tenantId = req.headers["x-tenant-id"];
+    const tenantId = req.headers["x-tenant-id"]; // Retrieve tenant ID from headers
 
     if (!tenantId) {
       return res.status(400).json({ error: "Tenant ID is required" });
     }
 
+    // Find the user by username and tenant ID
     const user = await User.findOne({ username, tenant: tenantId });
 
     if (!user) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
+    // Check if the provided password matches the stored hash
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
+    // Generate a JWT token
     const token = jwt.sign(
       { userId: user._id, tenantId },
       process.env.JWT_SECRET,
       { expiresIn: "30d" }
     );
 
+    // Check email verification status and respond accordingly
     if (!user.emailVerified) {
       return res.status(200).json({
         token,
-        message: "Login successful,", // but your email is not verified.",
-        emailVerified: false
+        message: "Login successful, but your email is not verified.",
+        emailVerified: false,
       });
     }
 
     res.status(200).json({
       token,
       message: "Login successful",
-      emailVerified: true
+      emailVerified: true,
     });
   } catch (error) {
     console.error("Error logging in:", error.message);
