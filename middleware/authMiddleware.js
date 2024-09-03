@@ -50,7 +50,6 @@ exports.verifyRole = (roles) => {
   };
 };
 
-
 exports.verifyUser = async (req, res, next) => {
   const authHeader = req.header("Authorization");
 

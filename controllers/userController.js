@@ -87,46 +87,43 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const tenantId = req.headers["x-tenant-id"]; // Retrieve tenant ID from headers
+    const tenantId = req.headers["x-tenant-id"];
 
     if (!tenantId) {
       return res.status(400).json({ error: "Tenant ID is required" });
     }
 
-    // Find the user by username and tenant ID
     const user = await User.findOne({ username, tenant: tenantId });
 
     if (!user) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
-    // Check if the provided password matches the stored hash
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
-    // Generate a JWT token
     const token = jwt.sign(
       { userId: user._id, tenantId },
       process.env.JWT_SECRET,
       { expiresIn: "30d" }
     );
 
-    // Check email verification status and respond accordingly
-    if (!user.emailVerified) {
-      return res.status(200).json({
-        token,
-        message: "Login successful, but your email is not verified.",
-        emailVerified: false,
-      });
-    }
+    // Include all necessary user data in the response
+    const userData = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      emailVerified: user.emailVerified,
+    };
 
     res.status(200).json({
       token,
+      user: userData, // Return the full user data
       message: "Login successful",
-      emailVerified: true,
     });
   } catch (error) {
     console.error("Error logging in:", error.message);
@@ -213,17 +210,18 @@ exports.getUserProfile = async (req, res) => {
 
     console.log("Fetched user profile successfully:", user);
 
-    res.status(200).json({ user });
+    res.status(200).json({
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      // Include any other user fields you want to send to the frontend
+    });
   } catch (error) {
     console.error("Error fetching user profile:", error.message);
-
-    // Log the stack trace for detailed error information
     console.error("Stack trace:", error.stack);
-
     res.status(500).json({ error: "Server error", details: error.message });
   }
 };
-
 
 exports.updateUserProfile = async (req, res) => {
   try {
