@@ -5,6 +5,10 @@ const jwt = require("jsonwebtoken");
 const Tenant = require("../models/Tenant");
 const User = require("../models/User");
 
+function logAction(action, message) {
+  console.error(`[${action}] ${message}`);
+}
+
 exports.createTenant = async (req, res) => {
   try {
     const { name, contactEmail, domain, sendGridApiKey, verifiedSenderEmail } =
@@ -164,5 +168,39 @@ exports.deleteTenant = async (req, res) => {
   } catch (error) {
     logAction("Error Deleting Tenant", error.message);
     res.status(500).json({ error: "Server error" });
+  }
+};
+exports.verifyTenant = async (req, res) => {
+  const tenantId = req.header("X-Tenant-Id");
+
+  console.log(
+    "[verifyTenant] Received request to verify tenant with ID:",
+    tenantId
+  );
+
+  if (!tenantId) {
+    console.error("[verifyTenant] X-Tenant-Id header is missing.");
+    return res
+      .status(400)
+      .json({ isValid: false, error: "X-Tenant-Id header is required" });
+  }
+
+  try {
+    console.log("[verifyTenant] Querying database for tenant ID:", tenantId);
+
+    const tenant = await Tenant.findOne({ _id: tenantId, status: "Active" });
+
+    if (!tenant) {
+      console.error("[verifyTenant] No active tenant found for ID:", tenantId);
+      return res
+        .status(404)
+        .json({ isValid: false, error: "Invalid or inactive tenant" });
+    }
+
+    console.log("[verifyTenant] Tenant found and active for ID:", tenantId);
+    res.status(200).json({ isValid: true });
+  } catch (error) {
+    console.error("[verifyTenant] Error during database query:", error.message);
+    res.status(500).json({ isValid: false, error: "Internal server error" });
   }
 };

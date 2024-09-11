@@ -7,8 +7,9 @@ const attachTenant = require("../middleware/attachTenant");
 // Require dotenv to load environment variables
 const dotenv = require("dotenv");
 dotenv.config(); // This will load the environment variables from your .env file
-
 // Tenant creation - SuperAdmin only
+router.get("/verify-tenant", tenantController.verifyTenant);
+
 router.post(
   "/",
   authMiddleware.verifyRole(["SuperAdmin"]), // Ensure the user is a SuperAdmin
@@ -45,10 +46,12 @@ router.get(
   authMiddleware.verifyRole(["SuperAdmin"]),
   tenantController.getAllTenants
 );
+
+
+
 router.get(
   "/:id",
   attachTenant,
-  authMiddleware.verifyRole(["SuperAdmin"]),
   tenantController.getTenantById
 );
 
@@ -74,4 +77,6 @@ router.post(
   authMiddleware.verifyRole(["SuperAdmin"]),
   tenantController.regenerateApiKey
 );
+
+
 module.exports = router;
