@@ -19,6 +19,11 @@ exports.registerUser = async (req, res) => {
   try {
     const { name, username, email, password, tenant, role } = req.body;
 
+    // Check if all required fields are provided
+    if (!name || !username || !email || !password || !tenant) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
     // Validate password strength
     if (password.length < 6) {
       return res
@@ -51,7 +56,7 @@ exports.registerUser = async (req, res) => {
       name,
       username,
       email,
-      role,
+      role: role || "Viewer", // Default role if not provided
       password,
       tenant: tenantObj._id,
       verificationToken,
@@ -61,21 +66,21 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
 
     // Construct verification URL to include tenant ID in query params
-    //const verificationUrl = `${req.protocol}://${tenantObj.domain}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
+    const verificationUrl = `${tenantObj.domain}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
 
     // Send verification email
-    //await sendEmail(
-    //  newUser.email,
-    //  tenantObj.verifiedSenderEmail,
-    //  "Email Verification",
-    //  `Please verify your email by clicking on the following link:\n\n${verificationUrl}`,
-     // tenantObj.sendGridApiKey
-   // );
+    await sendEmail(
+      newUser.email,
+      tenantObj.verifiedSenderEmail,
+      "Email Verification",
+      `Please verify your email by clicking on the following link:\n\n${verificationUrl}`,
+      tenantObj.sendGridApiKey
+    );
 
     // Send success response
     res.status(201).json({
       message:
-        "User registered successfully. ", //Please check your email to verify your account.",
+        "User registered successfully. Please check your email to verify your account.",
     });
   } catch (error) {
     console.error("Error registering user:", error.message);
