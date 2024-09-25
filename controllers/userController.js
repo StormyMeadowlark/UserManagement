@@ -366,40 +366,61 @@ exports.forgotPassword = async (req, res) => {
 
 // Reset Password - Verify Token and Set New Password
 exports.resetPassword = async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
-  console.log("Received password reset with token:", token);
+  const { token } = req.params; // Token passed via URL
+  const { password } = req.body; // New password from request body
+
+  // Ensure the password is provided and meets basic length requirement
+  if (!password || password.length < 6) {
+    return res
+      .status(400)
+      .json({ error: "Password must be at least 6 characters long." });
+  }
 
   try {
-    // Hash the provided token to find a matching user in the database
+    console.log("Received reset password request with token:", token);
+
+    // Hash the provided token for secure lookup in the database
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-    console.log("Hashed token for lookup:", hashedToken);
+    console.log("Hashed token for database lookup:", hashedToken);
 
     // Find the user with the matching reset token and ensure the token has not expired
     const user = await User.findOne({
       resetPasswordToken: hashedToken,
-      resetPasswordExpires: { $gt: Date.now() }, // Ensure token is still valid
+      resetPasswordExpires: { $gt: Date.now() }, // Ensure the token hasn't expired
     });
 
+    // If no user is found or the token is invalid or expired, return an error
     if (!user) {
-      console.log("Invalid or expired token for reset:", token);
+      console.log("Invalid or expired reset token:", token);
       return res.status(400).json({ error: "Invalid or expired token." });
     }
+
+    console.log("User found for password reset:", user.email);
 
     // Hash the new password before saving it
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
-    user.resetPasswordToken = undefined; // Remove the token after successful reset
+    console.log("New password hashed successfully.");
+
+    // Clear the reset token and expiration after successful password reset
+    user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
     // Save the updated user to the database
     await user.save();
-    console.log("Password has been reset successfully for user:", user.email);
+    console.log("Password reset successful for user:", user.email);
 
-    res.status(200).json({ message: "Password has been reset successfully." });
+    // Send a success response
+    return res
+      .status(200)
+      .json({ message: "Password has been reset successfully." });
   } catch (error) {
     console.error("Error during password reset:", error.message);
-    res.status(500).json({ error: "Server error." });
+
+    // Send a server error response
+    return res
+      .status(500)
+      .json({ error: "Server error during password reset." });
   }
 };
 
