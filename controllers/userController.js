@@ -325,7 +325,7 @@ exports.forgotPassword = async (req, res) => {
     console.log("User updated with reset token and expiry.");
 
     // Use the tenant's domain directly for the reset URL
-    const resetUrl = `${user.tenant.domain}/user/reset-password/${resetToken}`;
+    const resetUrl = `${user.tenant.domain}/user/reset-password?${resetToken}`;
     console.log("Generated reset URL:", resetUrl);
 
     // Email subject and message
