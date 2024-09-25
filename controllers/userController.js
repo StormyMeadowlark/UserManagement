@@ -378,7 +378,7 @@ exports.resetPassword = async (req, res) => {
     // Find the user with the matching reset token and ensure the token has not expired
     const user = await User.findOne({
       resetPasswordToken: hashedToken,
-      resetPasswordExpires: { $gt: Date.now() }, // Token expiration check
+      resetPasswordExpires: { $gt: Date.now() }, // Ensure token is still valid
     });
 
     if (!user) {
@@ -386,9 +386,10 @@ exports.resetPassword = async (req, res) => {
       return res.status(400).json({ error: "Invalid or expired token." });
     }
 
-    // Hash the new password and save it to the user's account
-    user.password = password; // Fixing the missing hash
-    user.resetPasswordToken = undefined;
+    // Hash the new password before saving it
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+    user.resetPasswordToken = undefined; // Remove the token after successful reset
     user.resetPasswordExpires = undefined;
 
     // Save the updated user to the database
