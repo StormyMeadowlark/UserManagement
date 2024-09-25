@@ -283,7 +283,7 @@ exports.deleteUser = async (req, res) => {
 
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
-  const { tenantId } = req.params; // Extract tenantId from the URL
+  const { tenantId } = req.params;
 
   console.log("Received password reset request for email:", email);
   console.log("Tenant ID extracted from URL:", tenantId);
@@ -327,7 +327,7 @@ exports.forgotPassword = async (req, res) => {
     // Create a reset URL to send to the user's email
     const resetUrl = `${req.protocol}://${req.get(
       "host"
-    )}/api/users/${tenantId}/reset-password/${resetToken}`;
+    )}/api/v1/users/${tenantId}/reset-password/${resetToken}`;
     console.log("Generated reset URL:", resetUrl);
 
     // Email subject and message
