@@ -87,7 +87,6 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-
 exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -97,13 +96,20 @@ exports.loginUser = async (req, res) => {
       return res.status(400).json({ error: "Tenant ID is required" });
     }
 
+    console.log("Incoming login request:", { username, tenantId });
+
     const user = await User.findOne({ username, tenant: tenantId });
+    console.log("Retrieved user:", user); // Log the retrieved user
 
     if (!user) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
 
+    // Log the user's password stored in the database for comparison (only for debugging purposes)
+    console.log("User password from DB:", user.password); // Log hashed password
+
     const isMatch = await user.comparePassword(password);
+    console.log("Password match result:", isMatch); // Log result of password comparison
 
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid username or password" });
@@ -115,7 +121,7 @@ exports.loginUser = async (req, res) => {
       { expiresIn: "30d" }
     );
 
-    // Include all necessary user data in the response
+    // Include necessary user data in the response
     const userData = {
       _id: user._id,
       username: user.username,
@@ -126,7 +132,7 @@ exports.loginUser = async (req, res) => {
 
     res.status(200).json({
       token,
-      user: userData, // Return the full user data
+      user: userData,
       message: "Login successful",
     });
   } catch (error) {
@@ -134,7 +140,6 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ error: "Server error", details: error.message });
   }
 };
-
 exports.verifyEmail = async (req, res) => {
   try {
     const token = req.params.token;
@@ -185,7 +190,6 @@ exports.verifyEmail = async (req, res) => {
       .json({ error: "Error verifying email", details: error.message });
   }
 };
-
 
 exports.getUserProfile = async (req, res) => {
   try {
@@ -403,16 +407,13 @@ exports.resetPassword = async (req, res) => {
 
     console.log("User found for password reset:", user.email);
 
-    // Hash the new password before saving it
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-    console.log("New password hashed successfully.");
-
+    user.password = password
+    
     // Clear the reset token and expiration fields after successful password reset
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
-    // Save the updated user record in the database
+    // Save the updated user record in the database password is hashed upon saving
     await user.save();
     console.log("Password reset successful for user:", user.email);
 
@@ -486,39 +487,59 @@ exports.logoutUser = (req, res) => {
 exports.changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
-    const sanitizedOldPassword = sanitize(oldPassword);
-    const sanitizedNewPassword = sanitize(newPassword);
 
-    const user = await User.findById(req.user._id);
+    // Log the request body
+    console.log("Request body:", req.body);
 
+    // Validate that both oldPassword and newPassword are provided
+    if (!oldPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({ error: "Both old and new passwords are required" });
+    }
+
+    // Ensure user is properly fetched before proceeding
+    const user = await User.findById(req.user.userId); // Fetch the user based on the authenticated user ID
+
+    // Log fetched user
+    console.log("Fetched user for password change:", user);
+
+    // If user is not found, return an error
     if (!user) {
-      logAction(
-        "Password Change Attempt for Non-existent User",
-        `User ID: ${req.user._id}`
-      );
+      console.log("User not found for password change:", req.user.userId);
       return res.status(404).json({ error: "User not found" });
     }
 
-    const isMatch = await comparePassword(sanitizedOldPassword, user.password);
+    // Log hashed password from the database
+    console.log("Hashed password from DB:", user.password);
+
+    // Compare the old password with the user's current password
+    const isMatch = await user.comparePassword(oldPassword);
+    console.log("Password match result:", isMatch); // Log the result of the password comparison
+
     if (!isMatch) {
-      logAction("Incorrect Old Password Attempt", `User ID: ${user._id}`);
+      console.log("Incorrect old password attempt for user:", user.username);
       return res.status(400).json({ error: "Old password is incorrect" });
     }
 
-    user.password = await hashPassword(sanitizedNewPassword);
+    // If old password matches, hash the new password
+    user.password = newPassword // Hash the new password
+
+    // Save the updated user details
     await user.save();
-    logAction(
-      "Password Changed",
-      `User ${user.username} changed their password.`
-    );
-    res.status(200).json({ message: "Password changed successfully" });
+
+    console.log("Password changed successfully for user:", user.username);
+
+    // Send success response
+    return res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {
-    logAction("Error Changing Password", error.message);
-    res
+    console.error("Error changing password:", error.message);
+    return res
       .status(500)
       .json({ error: "Error changing password", details: error.message });
   }
 };
+
 
 exports.getAllUsers = async (req, res) => {
   try {

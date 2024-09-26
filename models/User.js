@@ -4,6 +4,9 @@ const validator = require("validator");
 
 const UserSchema = new mongoose.Schema(
   {
+    // Basic User Information
+    firstName: { type: String, trim: true },
+    lastName: { type: String, trim: true },
     username: {
       type: String,
       required: true,
@@ -16,52 +19,78 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
       lowercase: true,
-      unique: true, // Ensure unique email
+      unique: true,
       validate: [validator.isEmail, "Invalid email address"],
     },
     password: {
       type: String,
       required: true,
-      minlength: 6, // Example minimum length
+      minlength: 6,
     },
+
+    // Contact Information
+    phoneNumber: {
+      type: String,
+      validate: [validator.isMobilePhone, "Invalid phone number"],
+    },
+    address: {
+      street: { type: String, trim: true },
+      city: { type: String, trim: true },
+      state: { type: String, trim: true },
+      postalCode: { type: String, trim: true },
+      country: { type: String, trim: true, default: "USA" },
+    },
+    profilePicture: { type: String, default: null },
+
+    // Authentication & Security
     role: {
       type: String,
       enum: ["Admin", "Editor", "Viewer", "SuperAdmin", "Guest", "Tenant"],
       default: "Viewer",
     },
-    tenant: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Tenant",
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+    emailVerified: { type: Boolean, default: false },
+    verificationToken: String,
+    twoFactorEnabled: { type: Boolean, default: false },
+    twoFactorMethod: {
+      type: String,
+      enum: ["SMS", "Email", "AuthenticatorApp"],
     },
+
+    // Preferences & Activity Tracking
+    isSubscribedToNewsletter: { type: Boolean, default: false },
+    preferredLanguage: { type: String, default: "en" },
+    timezone: { type: String, default: "UTC" },
+    lastLogin: { type: Date },
+    lastPasswordChange: { type: Date },
+    lastActivity: { type: Date },
     status: {
       type: String,
       enum: ["Active", "Suspended", "Deactivated"],
       default: "Active",
       index: true,
     },
-    lastLogin: {
-      type: Date,
+
+    // Relationships & Associations
+    tenant: { type: mongoose.Schema.Types.ObjectId, ref: "Tenant" },
+    savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+    socialAccounts: {
+      googleId: String,
+      facebookId: String,
+      githubId: String,
     },
-    profilePicture: {
-      type: String,
-    },
-    savedPosts: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post",
-      },
-    ],
-    resetPasswordToken: String,
-    resetPasswordExpires: Date,
-    emailVerified: {
-      type: Boolean,
-      default: false,
-    },
-    verificationToken: String,
+
+    // API & Security Keys
+    apiKeys: [{ key: String, createdAt: { type: Date, default: Date.now } }],
+
+    // Optional Extensibility
+    meta: { type: mongoose.Schema.Types.Mixed, default: {} },
   },
   { timestamps: true }
 );
 
+// Hash the password before saving
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
@@ -69,11 +98,13 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
+// Method to compare passwords
 UserSchema.methods.comparePassword = function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-UserSchema.index({ email: 1, username: 1 });
+UserSchema.index({ email: 1, username: 1, phoneNumber: 1 });
 
 const User = mongoose.model("User", UserSchema);
+
 module.exports = User;

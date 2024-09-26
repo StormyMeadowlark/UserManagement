@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose"); // Ensure mongoose is imported
 const User = require("../models/User");
-const sanitize = require("sanitize-html");
 
 exports.verifyRole = (roles) => {
   return async (req, res, next) => {
@@ -15,7 +15,7 @@ exports.verifyRole = (roles) => {
       }
 
       // Extract and sanitize the token
-      const token = sanitize(authHeader.replace("Bearer ", "").trim());
+      const token = authHeader.replace("Bearer ", "").trim();
 
       // Verify JWT token
       let decoded;
@@ -27,7 +27,7 @@ exports.verifyRole = (roles) => {
       }
 
       // Retrieve user by ID from the decoded token
-      const user = await User.findById(decoded.userId).populate("tenant"); // Ensure that the field matches your model
+      const user = await User.findById(decoded.userId).populate("tenant");
 
       // Check if user exists and has a permitted role
       if (!user) {
@@ -44,7 +44,10 @@ exports.verifyRole = (roles) => {
       req.user = user;
       next();
     } catch (error) {
-      console.error("Error in verifyRole middleware:", error.message);
+      console.error("Error in verifyRole middleware:", error.message, {
+        url: req.originalUrl, // log the request URL
+        method: req.method, // log the request method
+      });
       res.status(500).json({ error: "Internal server error." });
     }
   };
@@ -62,27 +65,38 @@ exports.verifyUser = async (req, res, next) => {
   const token = authHeader.split(" ")[1];
 
   try {
-    // Verify the JWT token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded JWT payload:", decoded);
 
-    console.log("Decoded JWT payload:", decoded); // Log the decoded token payload
+    const userId = new mongoose.Types.ObjectId(decoded.userId); // Ensure this is correctly created
+    const tenantId = new mongoose.Types.ObjectId(decoded.tenantId);
 
-    // Fetch the complete user details from the database
-    const user = await User.findById(decoded.userId).populate("tenant");
+    console.log("Querying user with ID:", userId);
+    const user = await User.findById(userId).populate("tenant");
 
-    // Check if user exists
+    console.log("Fetched user:", user); // Log the fetched user document
+
     if (!user) {
-      console.log("User not found with ID:", decoded.userId);
+      console.log("User not found with ID:", userId);
       return res.status(404).json({ error: "User not found." });
     }
 
-    // Attach the full user object to the request
-    req.user = { userId: user._id, tenantId: user.tenant._id }; // Ensure both values are set correctly
+    req.user = { userId: user._id, tenantId: user.tenant._id };
     console.log("User attached to request:", req.user);
 
     next();
   } catch (error) {
-    console.error("Error in verifyUser middleware:", error.message);
+    console.error("Error in verifyUser middleware:", error.message, {
+      url: req.originalUrl,
+      method: req.method,
+    });
+
+    if (error.name === "TokenExpiredError") {
+      return res
+        .status(401)
+        .json({ error: "Token expired. Please login again." });
+    }
+
     res.status(500).json({ error: "Internal server error." });
   }
 };

@@ -641,3 +641,16 @@
 2024-08-28T16:07:01.542Z - Error Fetching User: Cannot read properties of undefined (reading '_id')
 2024-08-28T16:07:22.600Z - Error Fetching User: Cannot read properties of undefined (reading '_id')
 2024-08-28T16:33:33.989Z - Error Fetching Users: Cannot read properties of undefined (reading '_id')
+2024-09-26T14:01:06.090Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T14:07:30.264Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T14:09:43.332Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T14:11:07.780Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T14:12:31.438Z - Error Changing Password: Cannot access 'user' before initialization
+2024-09-26T14:13:29.676Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T14:14:20.592Z - Error fetching user: Cannot read properties of undefined (reading '_id')
+2024-09-26T14:14:36.218Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T14:16:39.612Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T15:13:12.885Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T15:16:19.544Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T15:17:18.826Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T15:18:13.052Z - Password Change Attempt for Non-existent User: User ID: undefined
