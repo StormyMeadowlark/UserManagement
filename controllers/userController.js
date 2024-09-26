@@ -17,10 +17,10 @@ const ApiKey = require("../models/ApiKey");
 
 exports.registerUser = async (req, res) => {
   try {
-    const { name, username, email, password, tenant, role } = req.body;
+    const { username, email, password, tenant, role } = req.body;
 
     // Check if all required fields are provided
-    if (!name || !username || !email || !password || !tenant) {
+    if (!username || !email || !password || !tenant) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -53,7 +53,6 @@ exports.registerUser = async (req, res) => {
 
     // Create a new user
     const newUser = new User({
-      name,
       username,
       email,
       role: role || "Viewer", // Default role if not provided
