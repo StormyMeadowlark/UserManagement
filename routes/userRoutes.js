@@ -28,7 +28,10 @@ router.post(
   authMiddleware.verifyUser,
   userController.changePassword
 );
-
+router.post(
+  "/:tenantId/resend-verification-email",
+  userController.resendVerificationEmail
+);
 // Password reset routes
 router.post("/:tenantId/forgot-password", userController.forgotPassword);
 router.post("/:tenantId/reset-password/:token", userController.resetPassword);
@@ -49,9 +52,23 @@ router.put(
   authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
   userController.updateUser
 );
-router.delete("/:tenantId/user/:userId", userController.deleteUser);
+router.delete("/:tenantId/user/:userId", authMiddleware.verifyRole(["Admin", "SuperAdmin"]), userController.deleteUser);
 
 router.post("/:tenantId/logout", userController.logoutUser)
+
+router.post("/:tenantId/:userId", authMiddleware.verifyRole(["Admin", "SuperAdmin"]), userController.updateUserRole)
+
+router.put("/:tenantId/:userId/activate", authMiddleware.verifyRole(["Admin", "SuperAdmin"]), userController.activateUser)
+router.put("/:tenantId/:userId/deactivate", authMiddleware.verifyRole(["Admin", "SuperAdmin"]), userController.deactivateUser);
+router.put("/:tenantId/:userId/suspend", authMiddleware.verifyRole(["Admin", "SuperAdmin"]), userController.suspendUser);
+
+router.post(
+  "/:tenantId/:userId/refresh-token",
+  authMiddleware.verifyRole(["Admin", "SuperAdmin"]),
+  userController.refreshToken
+);
+
+
 
 module.exports = router;
 

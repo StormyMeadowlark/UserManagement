@@ -13,7 +13,9 @@ const { encrypt } = require("../config/config");
 require("dotenv").config();
 const Tenant = require("../models/Tenant")
 const bcrypt = require("bcrypt")
+const mongoose = require("mongoose");
 const ApiKey = require("../models/ApiKey");
+const validator = require("validator");
 
 exports.registerUser = async (req, res) => {
   try {
@@ -472,18 +474,6 @@ exports.logoutUser = (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
 exports.changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
@@ -540,19 +530,34 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({ tenant: req.tenant._id }).select(
-      "-password"
-    ); // Fetch users only for the tenant
+    // Check if the tenant exists
+    if (!req.tenant) {
+      return res.status(400).json({ error: "Tenant not found" });
+    }
+
+    console.log("Fetching users for tenant ID:", req.tenant._id);
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const users = await User.find({ tenant: req.tenant._id })
+      .select("-password") // Exclude password from results
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const totalCount = await User.countDocuments({ tenant: req.tenant._id });
+
     logAction(
       "Users Retrieved",
       `Tenant ID: ${req.tenant._id}, Users Count: ${users.length}`
     );
-    res
-      .status(200)
-      .json({ message: "Users retrieved successfully", data: { users } });
+
+    res.status(200).json({
+      message: "Users retrieved successfully",
+      data: { users, totalCount, page, limit },
+    });
   } catch (error) {
     logAction("Error Fetching Users", error.message);
     res
@@ -563,7 +568,18 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
   try {
-    const { id } = sanitize(req.params);
+    const { id } = req.params;
+
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
+
+    // Log the incoming request
+    console.log(
+      `Fetching user with ID: ${id} for tenant ID: ${req.tenant._id}`
+    );
+
     const user = await User.findOne({ _id: id, tenant: req.tenant._id }).select(
       "-password"
     );
@@ -587,12 +603,23 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const { id } = sanitize(req.params);
+    const { id } = req.params;
+
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
+
+    // Log the incoming request
+    console.log(
+      `Updating user with ID: ${id} for tenant ID: ${req.tenant._id}`
+    );
+
     const updates = req.body;
 
     // Hash password if it's being updated
     if (updates.password) {
-      updates.password = await hashPassword(sanitize(updates.password));
+      updates.password = await bcrypt.hash(sanitize(updates.password), 10);
     }
 
     // Update the user
@@ -601,6 +628,7 @@ exports.updateUser = async (req, res) => {
       updates,
       {
         new: true,
+        runValidators: true, // Ensure that validators are run on the update
       }
     ).select("-password");
 
@@ -621,20 +649,21 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-
-
-
-
-exports.getRoles = (req, res) => {
-  const roles = ["Admin", "Editor", "Viewer", "SuperAdmin", "Guest", "Tenant"];
-  logAction("Roles Retrieved", `Roles: ${roles.join(", ")}`);
-  res.status(200).json({ roles });
-};
-
 exports.updateUserRole = async (req, res) => {
   try {
-    const { id } = sanitize(req.params);
-    const { role } = sanitize(req.body);
+    const { tenantId, userId } = req.params; // Extract tenantId and userId
+
+    // Log the incoming request
+    console.log("Incoming request params:", req.params);
+    console.log(`User ID to be validated: ${userId}`);
+
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
+
+    // Sanitize and extract role
+    const role = sanitize(req.body.role);
 
     const validRoles = [
       "Admin",
@@ -645,18 +674,26 @@ exports.updateUserRole = async (req, res) => {
       "Tenant",
     ];
     if (!validRoles.includes(role)) {
-      logAction("Invalid Role Update Attempt", `User ID: ${id}, Role: ${role}`);
+      logAction(
+        "Invalid Role Update Attempt",
+        `User ID: ${userId}, Role: ${role}`
+      );
       return res.status(400).json({ error: "Invalid role" });
     }
 
+    console.log(`Updating role for user ID: ${userId} to ${role}`);
+
     const user = await User.findOneAndUpdate(
-      { _id: id, tenant: req.tenant._id },
+      { _id: userId, tenant: req.tenant._id }, // Use userId here
       { role },
       { new: true }
     );
 
     if (!user) {
-      logAction("Role Update Attempt for Non-existent User", `User ID: ${id}`);
+      logAction(
+        "Role Update Attempt for Non-existent User",
+        `User ID: ${userId}`
+      );
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -675,16 +712,28 @@ exports.updateUserRole = async (req, res) => {
 
 exports.activateUser = async (req, res) => {
   try {
-    const { id } = sanitize(req.params);
+    const { userId } = req.params; // Access userId from params
+
+    // Log the incoming request
+    console.log("Incoming request params:", req.params);
+    console.log(`Activating user with ID: ${userId}`);
+
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
 
     const user = await User.findOneAndUpdate(
-      { _id: id, tenant: req.tenant._id },
+      { _id: userId, tenant: req.tenant._id },
       { status: "Active" },
       { new: true }
     );
 
     if (!user) {
-      logAction("Activation Attempt for Non-existent User", `User ID: ${id}`);
+      logAction(
+        "Activation Attempt for Non-existent User",
+        `User ID: ${userId}`
+      );
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -700,16 +749,26 @@ exports.activateUser = async (req, res) => {
 
 exports.deactivateUser = async (req, res) => {
   try {
-    const { id } = sanitize(req.params);
+    const { userId } = req.params;
+
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
+
+    console.log(`Deactivating user with ID: ${userId}`);
 
     const user = await User.findOneAndUpdate(
-      { _id: id, tenant: req.tenant._id },
-      { status: "Deactivated" },
+      { _id: userId, tenant: req.tenant._id },
+      { status: "Inactive" },
       { new: true }
     );
 
     if (!user) {
-      logAction("Deactivation Attempt for Non-existent User", `User ID: ${id}`);
+      logAction(
+        "Deactivation Attempt for Non-existent User",
+        `User ID: ${userId}`
+      );
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -723,13 +782,71 @@ exports.deactivateUser = async (req, res) => {
   }
 };
 
+exports.suspendUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
+
+    console.log(`Suspending user with ID: ${userId}`);
+
+    const user = await User.findOneAndUpdate(
+      { _id: userId, tenant: req.tenant._id },
+      { status: "Suspended" },
+      { new: true }
+    );
+
+    if (!user) {
+      logAction(
+        "Suspension Attempt for Non-existent User",
+        `User ID: ${userId}`
+      );
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    logAction("User Suspended", `User ${user.username} suspended.`);
+    res.status(200).json({ message: "User suspended successfully", user });
+  } catch (error) {
+    logAction("Error Suspending User", error.message);
+    res
+      .status(500)
+      .json({ error: "Error suspending user", details: error.message });
+  }
+};
+
 exports.refreshToken = async (req, res) => {
   try {
-    const { token } = sanitize(req.body);
-    const decoded = jwt.verify(token, process.env.JWT_SECRET, {
-      ignoreExpiration: true,
-    });
+    const authHeader = req.header("Authorization"); // Expecting the refresh token in the Authorization header
 
+    // Validate that the Authorization header is provided
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(400).json({ error: "Token is required" });
+    }
+
+    const token = authHeader.split(" ")[1]; // Extract the token from the header
+
+    // Decode the token without verifying expiration
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET, {
+        ignoreExpiration: true,
+      });
+    } catch (error) {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+
+    // Log the decoded payload for debugging
+    console.log("Decoded JWT payload:", decoded);
+
+    // Check if the token has expired
+    if (decoded.exp && Date.now() >= decoded.exp * 1000) {
+      return res.status(401).json({ error: "Token has expired" });
+    }
+
+    // Create a new access token
     const newToken = jwt.sign(
       { _id: decoded._id, role: decoded.role },
       process.env.JWT_SECRET,
@@ -746,36 +863,49 @@ exports.refreshToken = async (req, res) => {
   }
 };
 
-exports.searchUsers = async (req, res) => {
-  try {
-    const { query } = sanitize(req.query);
-    const users = await User.find({
-      tenant: req.tenant._id,
-      $or: [
-        { username: { $regex: query, $options: "i" } },
-        { email: { $regex: query, $options: "i" } },
-      ],
-    }).select("-password");
-
-    logAction("User Search", `Search query: ${query}`);
-    res.status(200).json({ users });
-  } catch (error) {
-    logAction("Error Searching Users", error.message);
-    res
-      .status(500)
-      .json({ error: "Error searching users", details: error.message });
-  }
-};
-
 exports.resendVerificationEmail = async (req, res) => {
+  console.log("Incoming request params:", req.params);
+  console.log("Request body:", req.body);
+
   try {
-    const { email } = sanitize(req.body);
-    const user = await User.findOne({ email, tenant: req.tenant._id });
+    // Validate input
+    if (!req.body.email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    // Extract the Authorization header
+    const authorization = req.header("Authorization");
+    if (!authorization || !authorization.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const token = authorization.split(" ")[1]; // Extract the token
+    let decoded;
+
+    // Verify the token and extract user ID
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (error) {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+
+    const userId = decoded._id; // Extract user ID from decoded token
+
+    // Validate email format
+    if (!validator.isEmail(req.body.email)) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
+
+    // Look up the user based on email and tenant
+    const user = await User.findOne({
+      email: req.body.email,
+      tenant: req.tenant._id,
+    });
 
     if (!user) {
       logAction(
         "Resend Verification Attempt for Non-existent User",
-        `Email: ${email}`
+        `Email: ${req.body.email}, User ID: ${userId}`
       );
       return res.status(404).json({ error: "User not found" });
     }
@@ -783,44 +913,68 @@ exports.resendVerificationEmail = async (req, res) => {
     if (user.emailVerified) {
       logAction(
         "Resend Verification Attempt for Already Verified Email",
-        `Email: ${email}`
+        `Email: ${req.body.email}, User ID: ${userId}`
       );
       return res.status(400).json({ error: "Email already verified" });
     }
 
+    // Generate a new verification token
     const verificationToken = crypto.randomBytes(20).toString("hex");
     user.verificationToken = verificationToken;
     await user.save();
 
-    const verificationUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/api/users/verify-email/${verificationToken}`;
-    await sendEmail(
-      user.email,
-      "Email Verification",
-      `Please verify your email by clicking on the following link:\n\n${verificationUrl}`
-    );
+    // Fetch the tenant information
+    const tenant = await Tenant.findById(req.tenant._id);
+    console.log("Tenant Information:", tenant);
+
+    // Create the verification URL
+    const verificationUrl = `${tenant.domain}/verify?token=${verificationToken}&tenantId=${tenant._id}`;
+
+    // Ensure verifiedSenderEmail is populated
+    const senderEmail = tenant.verifiedSenderEmail;
+    if (!senderEmail) {
+      logAction(
+        "Error Sending Verification Email",
+        "Verified sender email is undefined."
+      );
+      return res.status(500).json({ error: "Sender email is not defined." });
+    }
+
+    // Handle email sending errors
+    try {
+      await sendEmail(
+        user.email,
+        senderEmail, // Use the verified sender email
+        "Email Verification",
+        `Please verify your email by clicking on the following link:\n\n${verificationUrl}`,
+        tenant.sendGridApiKey // Ensure this is a valid SendGrid API key
+      );
+    } catch (emailError) {
+      logAction("Error Sending Verification Email", emailError.message);
+      return res
+        .status(500)
+        .json({ error: "Error sending verification email" });
+    }
 
     logAction(
       "Verification Email Resent",
-      `Verification email resent to ${email}`
+      `Verification email resent to ${req.body.email}, User ID: ${userId}`
     );
     res.status(200).json({ message: "Verification email resent successfully" });
   } catch (error) {
     logAction("Error Resending Verification Email", error.message);
-    res
-      .status(500)
-      .json({
-        error: "Error resending verification email",
-        details: error.message,
-      });
+    res.status(500).json({
+      error: "Error resending verification email",
+      details: error.message,
+    });
   }
 };
+
 exports.updateUserTenant = async (req, res) => {
   try {
     const { tenantId } = req.body; // New tenant ID provided in the request
     const userId = req.user._id; // Assuming user is authenticated
-
+  
     // Find the new tenant by ID
     const newTenant = await Tenant.findById(tenantId);
     if (!newTenant) {
@@ -904,6 +1058,7 @@ exports.uploadProfilePicture = (req, res) => {
     }
   });
 };
+
 exports.generateApiKeyForUser = async (req, res) => {
   try {
     const { userId } = sanitize(req.params);

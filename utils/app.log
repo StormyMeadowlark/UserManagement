@@ -654,3 +654,48 @@
 2024-09-26T15:16:19.544Z - Password Change Attempt for Non-existent User: User ID: undefined
 2024-09-26T15:17:18.826Z - Password Change Attempt for Non-existent User: User ID: undefined
 2024-09-26T15:18:13.052Z - Password Change Attempt for Non-existent User: User ID: undefined
+2024-09-26T16:00:31.242Z - Error Fetching Users: Cannot read properties of undefined (reading '_id')
+2024-09-26T16:01:59.265Z - Error Fetching Users: Cannot read properties of undefined (reading '_id')
+2024-09-26T16:04:03.821Z - Users Retrieved: Tenant ID: 66cf01edfc069c867b6fbca9, Users Count: 3
+2024-09-26T16:08:19.976Z - Users Retrieved: Tenant ID: 66cf01edfc069c867b6fbca9, Users Count: 3
+2024-09-26T16:09:42.101Z - Users Retrieved: Tenant ID: 66cf01edfc069c867b6fbca9, Users Count: 3
+2024-09-26T16:12:36.557Z - User Not Found: User ID: undefined
+2024-09-26T16:13:22.761Z - User Not Found: User ID: undefined
+2024-09-26T16:13:32.586Z - Users Retrieved: Tenant ID: 66cf01edfc069c867b6fbca9, Users Count: 3
+2024-09-26T16:14:01.540Z - User Not Found: User ID: undefined
+2024-09-26T16:14:41.397Z - Error Fetching User: mongoose is not defined
+2024-09-26T16:14:56.119Z - User Retrieved: User ID: 66f581e2dbac2d35d4f52b1c
+2024-09-26T16:15:07.716Z - User Retrieved: User ID: 66f581e2dbac2d35d4f52b1c
+2024-09-26T16:17:34.225Z - Update Attempt for Non-existent User: User ID: undefined
+2024-09-26T16:18:36.920Z - User Updated: User name23 updated their profile.
+2024-09-26T16:19:54.931Z - User Updated: User name23 updated their profile.
+2024-09-26T16:26:12.964Z - Invalid Role Update Attempt: User ID: 66f581e2dbac2d35d4f52b1c, Role: 
+2024-09-26T16:26:34.271Z - User Role Updated: User name23 role updated to SuperAdmin.
+2024-09-26T16:28:56.646Z - User Updated: User name23 updated their profile.
+2024-09-26T16:37:03.222Z - User Activated: User name23 activated.
+2024-09-26T16:37:15.794Z - User Activated: User name23 activated.
+2024-09-26T16:41:05.751Z - User Deactivated: User name23 deactivated.
+2024-09-26T16:41:11.449Z - User Suspended: User name23 suspended.
+2024-09-26T16:41:17.050Z - User Activated: User name23 activated.
+2024-09-26T16:42:53.636Z - User Deactivated: User name23 deactivated.
+2024-09-26T16:43:00.820Z - User Suspended: User name23 suspended.
+2024-09-26T16:43:07.561Z - User Activated: User name23 activated.
+2024-09-26T16:49:55.833Z - Token Refreshed: Token refreshed for user undefined
+2024-09-26T16:53:06.925Z - Users Retrieved: Tenant ID: 66cf01edfc069c867b6fbca9, Users Count: 3
+2024-09-26T16:59:05.010Z - Token Refreshed: Token refreshed for user undefined
+2024-09-26T17:03:01.008Z - Token Refreshed: Token refreshed for user undefined
+2024-09-26T17:08:12.879Z - Users Retrieved: Tenant ID: 66cf01edfc069c867b6fbca9, Users Count: 3
+2024-09-26T17:08:35.265Z - Users Retrieved: Tenant ID: 66cf01edfc069c867b6fbca9, Users Count: 3
+2024-09-26T17:26:09.415Z - Users Retrieved: Tenant ID: 66cf01edfc069c867b6fbca9, Users Count: 3
+2024-09-26T17:33:26.770Z - Error Resending Verification Email: validator is not defined
+2024-09-26T17:34:10.220Z - Error Sending Verification Email: Email could not be sent
+2024-09-26T17:38:20.292Z - Error Sending Verification Email: Email could not be sent
+2024-09-26T17:40:51.551Z - Error Sending Verification Email: Email could not be sent
+2024-09-26T17:43:02.931Z - Verification Email Resent: Verification email resent to stormymeadowlark@gmail.com, User ID: undefined
+2024-09-26T17:44:19.552Z - Error Resending Verification Email: tenantObj is not defined
+2024-09-26T17:44:54.695Z - Error Resending Verification Email: tenantObj is not defined
+2024-09-26T17:45:16.981Z - Verification Email Resent: Verification email resent to stormymeadowlark@gmail.com, User ID: undefined
+2024-09-26T17:48:10.119Z - Verification Email Resent: Verification email resent to stormymeadowlark@gmail.com, User ID: undefined
+2024-09-26T17:50:04.276Z - Resend Verification Attempt for Already Verified Email: Email: stormymeadowlark@gmail.com, User ID: undefined
+2024-09-26T17:50:53.683Z - Verification Email Resent: Verification email resent to stormymeadowlark@gmail.com, User ID: undefined
+2024-09-26T17:59:48.571Z - Verification Email Resent: Verification email resent to stormymeadowlark@gmail.com, User ID: undefined
