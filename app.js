@@ -41,6 +41,7 @@ const userRoutes = require("./routes/userRoutes");
 const apiKeyRoutes = require("./routes/apiKeyRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const mediaRoutes = require("./routes/mediaRoutes");
+const organizationRoutes = require("./routes/organizationRoutes")
 
 // Routes
 app.use("/api/tenants", tenantRoutes);
@@ -48,7 +49,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/keys", apiKeyRoutes);
 app.use("/api/media", mediaRoutes);
-
+app.use("/api/organization", organizationRoutes)
 // Basic route
 app.get("/", (req, res) => {
   res.send("User Management API is running");
