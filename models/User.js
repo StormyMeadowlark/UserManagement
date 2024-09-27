@@ -45,8 +45,17 @@ const UserSchema = new mongoose.Schema(
     // Authentication & Security
     role: {
       type: String,
-      enum: ["Admin", "Editor", "Viewer", "SuperAdmin", "Guest", "Tenant"],
-      default: "Viewer",
+      enum: [
+        "Admin",
+        "Editor",
+        "Viewer",
+        "SuperAdmin",
+        "Guest",
+        "Tenant",
+        "Mechanic",
+        "User",
+      ],
+      default: "User",
     },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
@@ -85,7 +94,15 @@ const UserSchema = new mongoose.Schema(
     apiKeys: [{ key: String, createdAt: { type: Date, default: Date.now } }],
 
     // Optional Extensibility
-    meta: { type: mongoose.Schema.Types.Mixed, default: {} },
+    meta: {
+      managedVehicles: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "Vehicle" },
+      ], // Vehicles the user manages (Admin/Mechanic)
+      assignedRepairs: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "Service" },
+      ], // Service tasks for mechanics
+      customFields: mongoose.Schema.Types.Mixed, // Additional custom fields for extensibility
+    },
   },
   { timestamps: true }
 );
