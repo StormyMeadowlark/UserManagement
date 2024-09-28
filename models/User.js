@@ -120,7 +120,7 @@ UserSchema.methods.comparePassword = function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-UserSchema.index({ email: 1, username: 1, phoneNumber: 1, tenant: 1 });
+UserSchema.index({ email: 1, username: 1, phoneNumber: 1, tenant: 1 }, { unique: true }});
 
 const User = mongoose.model("User", UserSchema);
 
