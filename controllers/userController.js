@@ -39,15 +39,15 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ error: "Invalid tenant name" });
     }
 
-    // Check if the email or username is already taken within the tenant
+    // Check if the email and tenant combination already exists
     const existingUser = await User.findOne({
-      $or: [{ email }, { username }],
-      tenant: tenantObj._id, // Tenant-specific check
+      email,
+      tenant: tenantObj._id, // Ensure the user with this email belongs to the same tenant
     });
     if (existingUser) {
       return res
         .status(400)
-        .json({ error: "Email or Username already exists in this tenant" });
+        .json({ error: "Email already exists for this tenant" });
     }
 
     // Generate a verification token
