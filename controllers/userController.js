@@ -39,21 +39,13 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ error: "Invalid tenant name" });
     }
 
-    // Ensure the check is only done within the context of the tenant
-    const existingUser = await User.findOne({
-      email: email,
-      tenant: tenantObj._id,
-    });
-    if (existingUser) {
-      return res
-        .status(400)
-        .json({ error: "Email already exists for this tenant" });
-    }
+    // Remove the duplicate email check for now
+    // You won't check if the email is already in use
 
     // Generate a verification token
     const verificationToken = crypto.randomBytes(20).toString("hex");
 
-    // Create a new user within the tenant
+    // Create a new user
     const newUser = new User({
       username,
       email,
@@ -77,21 +69,14 @@ exports.registerUser = async (req, res) => {
       tenantObj.sendGridApiKey
     );
 
-    // Success response
-    res
-      .status(201)
-      .json({
-        message:
-          "User registered successfully. Please check your email to verify your account.",
-      });
+    // Send success response
+    res.status(201).json({
+      message:
+        "User registered successfully. Please check your email to verify your account.",
+    });
   } catch (error) {
-    if (error.code === 11000) {
-      return res
-        .status(400)
-        .json({ error: "Email already exists for this tenant" });
-    }
-    console.error("Error registering user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error registering user:", error.message);
+    res.status(500).json({ error: `Error registering user: ${error.message}` });
   }
 };
 
