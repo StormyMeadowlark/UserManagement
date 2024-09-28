@@ -21,54 +21,44 @@ exports.registerUser = async (req, res) => {
   try {
     const { username, email, password, tenant, role } = req.body;
 
-    // Check if all required fields are provided
     if (!username || !email || !password || !tenant) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Validate password strength
     if (password.length < 6) {
       return res
         .status(400)
         .json({ error: "Password must be at least 6 characters long" });
     }
 
-    // Check if the tenant exists
     const tenantObj = await Tenant.findOne({ name: tenant });
     if (!tenantObj) {
       return res.status(400).json({ error: "Invalid tenant name" });
     }
 
-    // Ensure the check is only done within the context of the tenant
-    const existingUser = await User.findOne({
-      email: email,
-      tenant: tenantObj._id,
-    });
+    // Only check for existing user within the same tenant
+    const existingUser = await User.findOne({ email, tenant: tenantObj._id });
     if (existingUser) {
       return res
         .status(400)
         .json({ error: "Email already exists for this tenant" });
     }
 
-    // Generate a verification token
     const verificationToken = crypto.randomBytes(20).toString("hex");
 
-    // Create a new user within the tenant
     const newUser = new User({
       username,
       email,
-      role: role || "Viewer", // Default role if not provided
+      role: role || "Viewer",
       password,
       tenant: tenantObj._id,
       verificationToken,
     });
 
-    // Save the new user
     await newUser.save();
 
     const verificationUrl = `${tenantObj.domain}/verify?token=${verificationToken}&tenantId=${tenantObj._id}`;
 
-    // Send verification email
     await sendEmail(
       newUser.email,
       tenantObj.verifiedSenderEmail,
@@ -77,18 +67,10 @@ exports.registerUser = async (req, res) => {
       tenantObj.sendGridApiKey
     );
 
-    // Success response
-    res
-      .status(201)
-      .json({
-        message:
-          "User registered successfully. Please check your email to verify your account.",
-      });
+    res.status(201).json({ message: "User registered successfully." });
   } catch (error) {
     if (error.code === 11000) {
-      return res
-        .status(400)
-        .json({ error: "Email already exists for this tenant" });
+      return res.status(400).json({ error: "Duplicate email for this tenant" });
     }
     console.error("Error registering user:", error);
     res.status(500).json({ error: "Internal server error" });
